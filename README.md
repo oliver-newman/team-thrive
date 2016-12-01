@@ -1,4 +1,4 @@
-# Team Thrive
+# TeamThrive
 
 This app is based on the sample application for
 [*Ruby on Rails Tutorial:
