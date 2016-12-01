@@ -1,3 +1,22 @@
 <% provide(:title, 'Sign Up') %>
+
 <h1>Sign Up</h1>
-<p>Sign up for TeamThrive</p>
+
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <%= form_for(@user) do |form| %>
+      <%= form.text_field :firstname, placeholder: "First name",
+                                      class: "half-field half-field-left" %>
+      <%= form.text_field :lastname, placeholder: "Last name",
+                                     class: "half-field half-field-right" %>
+
+      <%= form.email_field :email, placeholder: "Email" %>
+
+      <%= form.password_field :password, placeholder: "Password" %>
+      <%= form.password_field :password_confirmation,
+                              placeholder: "Confirm password" %>
+
+      <%= form.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

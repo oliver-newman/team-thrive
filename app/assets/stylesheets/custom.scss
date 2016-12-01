@@ -1,13 +1,24 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+/* mixins, variables, etc. */
+
 $gray-medium-light: #eaeaea;
+$thrive-green: #2CC14F;
+
+$background-color: $thrive-green;
+
+@mixin box-sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 /* general */
 
 body {
   padding-top: 60px;
-  background-color: #2CC14F;
+  background-color: $background-color;
 }
 
 section {
@@ -89,5 +100,75 @@ footer {
       margin-left: 15px;
     }
   }
+}
+
+/* sidebar */
+
+aside {
+  section.user-info {
+    margin-top: 20px;
+  }
+  section {
+    padding: 10px 0;
+    margin-top: 20px;
+    &:first-child {
+      border: 0;
+      padding-top: 0;
+    }
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -0.5px;
+      margin-bottom: 3px;
+      margin-top: 0px;
+    }
+  }
+}
+
+.gravatar {
+  float: left;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.gravatar_edit {
+  margin-top: 15px;
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box-sizing;
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+  &.half-field {
+    width: 49.3%;
+    &.half-field-left {
+      float: left;
+    }
+    &.half-field-right {
+      float:right;
+    }
+  }
+}
+
+input {
+  height: auto !important;
 }
 
