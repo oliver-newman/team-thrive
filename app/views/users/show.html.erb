@@ -1,11 +1,11 @@
-<% provide(:title, "#{@user.firstname} #{@user.lastname}") %>
+<% provide(:title, @user.full_name) %>
 
 <div class="row">
   <aside class="col-md-4">
     <section class="user-info">
       <h1>
         <%= gravatar_for @user, size: 80 %>
-        <%= @user.firstname %> <%= @user.lastname %>
+        <%= @user.full_name %>
       </h1>
     </section>
   </aside>
@@ -13,7 +13,9 @@
 
 <p>Email: <%= @user.email %></p>
 
-<h3>Strava Stats</h3>
-<% strava_stats_for(@user).each do |key, value| %>
-  <p><%= key %>: <%= value %></p>
+<% if @user.strava_id %>
+  <h3>Strava Stats</h3>
+  <% strava_stats_for(@user).each do |key, value| %>
+    <p><%= key %>: <%= value %></p>
+  <% end %>
 <% end %>
