@@ -83,4 +83,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # wwwhisper privacy config; only allow certain users to access app
+  config.middleware.insert 0, "Rack::WWWhisper"
 end

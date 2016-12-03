@@ -5,6 +5,11 @@ This app is based on the sample application for
 Learn Web Development with Rails*](http://www.railstutorial.org/)
 by [Michael Hartl](http://www.michaelhartl.com/).
 
+## Private deployment
+
+TeamThrive is currently privately deployed on Heroku using wwwhisper. It will be
+publicly released in the spring of 2017.
+
 ## License
 
 All source code in the [Ruby on Rails Tutorial](http://railstutorial.org/)
