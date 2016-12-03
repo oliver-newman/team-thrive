@@ -8,6 +8,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post users_path, params: { user: { first_name: "Foo",
                                          last_name: "",
                                          email: "user@invalid",
+                                         strava_id: 5882007,
                                          password: "bar",
                                          password_confirmation: "baz" } }
     end
@@ -20,6 +21,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post users_path, params: { user: { first_name: "Test",
                                          last_name: "User",
                                          email: "user@example.com",
+                                         strava_id: 5882007,
                                          password: "password",
                                          password_confirmation: "password" } }
     end

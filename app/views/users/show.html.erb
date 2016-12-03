@@ -15,7 +15,14 @@
 
 <% if @user.strava_id %>
   <h3>Strava Stats</h3>
-  <% strava_stats_for(@user).each do |key, value| %>
-    <p><%= key %>: <%= value %></p>
+  <% strava_stats_for(@user).each do |stat, data| %>
+    <% if data.class == Hash %>
+      <h4><%= stat.titleize %>:</h4>
+      <% data.each do |substat, subdata| %>
+        <p><%= substat.titleize %>: <%= subdata %></p>
+      <% end %>
+    <% else %>
+      <p><%= stat.titleize %>: <%= data %></p>
+    <% end %>
   <% end %>
 <% end %>
