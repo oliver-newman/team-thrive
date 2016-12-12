@@ -1,7 +1,7 @@
 module SessionsHelper
   # Starts a session (when a user logs in).
   def log_in(user)
-    # Uses the rails session method to save key-value pair as a cookie
+    # Uses the rails session method to save key-value pair as a temporary cookie
     session[:user_id] = user.id
   end
 
