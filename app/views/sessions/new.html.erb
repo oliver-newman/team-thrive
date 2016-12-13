@@ -7,11 +7,15 @@
     <%= form_for(:session, url: login_path) do |f| %>
       <%= f.email_field :email, class: 'form-control',
                                 placeholder: "Email" %>
-
       <%= f.password_field :password, class: 'form-control', 
                                       placeholder: "Password" %>
 
       <%= f.submit "Log In", class: "btn btn-primary" %>
+
+      <%= f.label :remember_me, class: "checkbox inline" do %>
+        <%= f.check_box :remember_me %>
+        <span>Keep me logged in</span>
+      <% end %>
     <% end %>
 
     <p>New to TeamThrive? <%= link_to "Sign up." %></p>

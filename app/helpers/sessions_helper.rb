@@ -12,7 +12,8 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token
   end
 
-  # Returns the user corresponding to the remember token cookie.
+  # Returns the user corresponding to the user_id cookie, setting the temporary
+  # user_id cookie equal to the persistent one, if it is not already set
   def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)
@@ -30,7 +31,7 @@ module SessionsHelper
     !current_user.nil?
   end
 
-  # Forgets a persistent session.
+  # Forgets a persistent session on the server AND client sides.
   def forget(user)
     user.forget
     cookies.delete(:user_id)
