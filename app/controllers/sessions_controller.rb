@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:session][:password])
       log_in @user    # Temporary session cookie
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_to @user
+      redirect_back_or_to @user
     else
       # Login failed
       flash.now[:danger] = 'Invalid email/password combination'

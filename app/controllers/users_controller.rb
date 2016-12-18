@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
-  # Check that a user is logged in before allowing update or edit
-  before_action :logged_in_user, only: [:edit, :update]
-  # Check that correct user is logged in before allowing update or edit
-  before_action :correct_user,   only: [:edit, :udpate]
+  before_action :confirm_user_logged_in, only: [:index, :edit, :update]
+  before_action :confirm_correct_user,   only: [:edit, :udpate]
+
+  def index
+    @users = User.all
+  end
 
   def show
     @user = User.find(params[:id])
@@ -43,18 +45,19 @@ class UsersController < ApplicationController
                                    :password_confirmation)
     end
 
-    # Before filters
+    # before_action filters
 
-    # Confirms a logged-in user.
-    def logged_in_user
+    # Checks that a user is logged in before allowing access to a page.
+    def confirm_user_logged_in
       unless logged_in?
+        store_url # So that user is sent to the same URL after they log in
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
     end
 
-    # Confirms the correct user.
-    def correct_user
+    # Checks that correct user is logged in before allowing access to a page.
+    def confirm_correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
