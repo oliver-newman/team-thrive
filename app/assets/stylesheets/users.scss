@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// sidebar
+// Sidebar
 
 aside {
   section {
@@ -48,4 +48,16 @@ aside {
 .edit-form {
   clear: left;
   padding-top: 15px;
+}
+
+// Users index
+
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid gray;
+  }
 }
