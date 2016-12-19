@@ -1,11 +1,30 @@
-testuser:
-  first_name: Test
-  last_name: User
-  email: user1@example.com
-  password_digest: <%= User.digest('password') %>
-
 oliver:
   first_name: Oliver
   last_name: Newman
-  email: oliver@whmsi.com
+  email: oliver@example.com
+  strava_id: 5882007
   password_digest: <%= User.digest('password') %>
+  admin: true
+
+bob:
+  first_name: Bob
+  last_name: Williams
+  email: bob@example.com
+  strava_id: 5882007
+  password_digest: <%= User.digest('password') %>
+
+lee:
+  first_name: Chen
+  last_name: Lee
+  email: lee@example.com
+  strava_id: 5882007
+  password_digest: <%= User.digest('password') %>
+
+<% 30.times do |i| %>
+user<%= i %>:
+  first_name: <%= "Test#{i}" %>
+  last_name: <%= "User#{i}" %>
+  email: <%= "test#{i}@example.com" %>
+  strava_id: 5882007
+  password_digest: <%= User.digest('password') %>
+<% end %>
