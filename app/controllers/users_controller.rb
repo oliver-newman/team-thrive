@@ -5,11 +5,12 @@ class UsersController < ApplicationController
   before_action :confirm_admin_user,      only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
   end
 
   def new
@@ -26,8 +27,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_email
-      flash[:info] = "We sent you an email with instructions on how to " +
-                     "activate your account."
+      flash[:info] = "A message with a confirmation link has been sent to " +
+                     "your email address. Please follow the link to activate your account."
       redirect_to root_url
     else
       render 'new'
