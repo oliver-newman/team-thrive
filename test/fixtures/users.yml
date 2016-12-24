@@ -5,6 +5,8 @@ oliver:
   strava_id: 5882007
   password_digest: <%= User.digest('password') %>
   admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 bob:
   first_name: Bob
@@ -12,6 +14,8 @@ bob:
   email: bob@example.com
   strava_id: 5882007
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 lee:
   first_name: Chen
@@ -19,6 +23,8 @@ lee:
   email: lee@example.com
   strava_id: 5882007
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 <% 30.times do |i| %>
 user<%= i %>:
@@ -27,4 +33,6 @@ user<%= i %>:
   email: <%= "test#{i}@example.com" %>
   strava_id: 5882007
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 <% end %>
