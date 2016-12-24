@@ -1,3 +1,5 @@
-User#account_activation
+Hi <%= @user.first_name %>,
 
-<%= @greeting %>, find me in app/views/user_mailer/account_activation.text.erb
+Welcome to TeamThrive! Follow the link below to activate your account:
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
