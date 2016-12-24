@@ -29,6 +29,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_redirected_to login_url
   end
+
+  test "should redirect signup when logged in" do
+    log_in_as(@user)
+    get signup_path
+    assert_redirected_to @user
+  end
   
   test "should protect admin attribute from edits" do
     log_in_as @user

@@ -13,15 +13,19 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if logged_in? # Don't let users who are already logged in sign up
+      redirect_to current_user
+    else 
+      @user = User.new
+    end
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
       UserMailer.account_activation(@user).deliver_now
-      flash[:info] = "We sent you an email with instructions on how to" +
-                     "activate your account"
+      flash[:info] = "We sent you an email with instructions on how to " +
+                     "activate your account."
       redirect_to root_url
     else
       render 'new'
