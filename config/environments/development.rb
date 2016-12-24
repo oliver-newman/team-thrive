@@ -32,7 +32,7 @@ Rails.application.configure do
   # Set up testing for emails on dev server
   config.action_mailer.delivery_method = :test
   host = "localhost:3000"
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
 
   config.action_mailer.perform_caching = false
 
