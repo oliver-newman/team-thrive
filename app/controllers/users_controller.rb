@@ -14,6 +14,8 @@ class UsersController < ApplicationController
 
   def new
     if logged_in? # Don't let users who are already logged in sign up
+      flash[:warning] = "Users who are already logged in cannot create new " +
+                        "accounts."
       redirect_to current_user
     else 
       @user = User.new

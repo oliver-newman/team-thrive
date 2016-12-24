@@ -33,6 +33,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should redirect signup when logged in" do
     log_in_as(@user)
     get signup_path
+    assert_not flash.empty?
     assert_redirected_to @user
   end
   
