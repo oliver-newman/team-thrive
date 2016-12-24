@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
+  def setup
+    ActionMailer::Base.deliveries.clear
+  end
+
   test "invalid signup information does not create new user" do
     get signup_path
     assert_select 'form[action="/signup"]'
@@ -16,7 +20,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select 'div#error-explanation'
   end
 
-  test "valid signup creates new user" do
+  test "valid signup and account activation creates new user" do
+    get signup_path
     assert_difference 'User.count', 1 do
       post users_path, params: { user: { first_name: "Test",
                                          last_name: "User",
@@ -25,9 +30,30 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                          password: "password",
                                          password_confirmation: "password" } }
     end
+    # Check that exactly one email was sent since clear in setup
+    assert_equal 1, ActionMailer::Base.deliveries.size
+
+    user = assigns(:user)
+    assert_not user.activated?
+
+    # Try to log in before activating account
+    log_in_as(user) 
+    assert_not is_logged_in?
+
+    # Try activating with an invalid token
+    get edit_account_activation_path("invalid token", email: user.email)
+    assert_not is_logged_in?
+
+    # Valid token but the wrong email
+    get edit_account_activation_path(user.activation_token, email: 'wrong')
+    assert_not is_logged_in?
+
+    # Valid token AND correct email
+    get edit_account_activation_path(user.activation_token, email: user.email)
+    assert user.reload.activated?
     follow_redirect!
-    # assert_template 'users/show'
+    assert_template 'users/show'
     assert_not flash.empty?
-    # assert is_logged_in?
+    assert is_logged_in?
   end
 end
