@@ -29,9 +29,10 @@ class User < ApplicationRecord
   # Returns true if given token matches the user's current digest (i.e., if
   # the user's account is being accessed from the computer from which the user's
   # current peristent session was initiated).
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  def authenticated?(attr, token)
+    digest = send("#{attr}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # Forgets user by deleting the server-side reference to a persistent session.
