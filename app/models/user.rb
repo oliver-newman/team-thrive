@@ -26,9 +26,8 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, self.class.digest(remember_token))
   end
 
-  # Returns true if given token matches the user's current digest (i.e., if
-  # the user's account is being accessed from the computer from which the user's
-  # current peristent session was initiated).
+  # Returns true if given token matches the user's corresponding digest
+  # attribute.
   def authenticated?(attr, token)
     digest = send("#{attr}_digest")
     return false if digest.nil?
@@ -48,6 +47,23 @@ class User < ApplicationRecord
   # Activates user's account.
   def activate
     update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
+  # Sets the password reset attributes.
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_attribute(:reset_digest, User.digest(reset_token))
+  end
+
+  # Sends password reset email.
+  def send_password_reset_email
+    update_attribute(:reset_sent_at, Time.zone.now)
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  # Returns true if user's password expiration token has expired.
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
   class << self
