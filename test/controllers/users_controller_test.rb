@@ -65,6 +65,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should redirect show of non-activated user" do
     log_in_as(@user)
     get user_path(@non_activated_user)
-    assert_redirected_to root_url
+    assert_redirected_to users_url
+  end
+
+  test "should redirect show of deleted user" do
+    log_in_as(@admin)
+    delete user_path(@other_user)
+    get user_path(@other_user)
+    assert_redirected_to users_url
+    assert_not flash.empty?
   end
 end
