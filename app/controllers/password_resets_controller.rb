@@ -17,7 +17,7 @@ class PasswordResetsController < ApplicationController
       redirect_to root_url
     else
       flash.now[:danger] = "We could not find an account associated with " +
-                           "the email address #{email}."
+                           "that email address."
       render 'new'
     end
   end
@@ -31,6 +31,7 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)
       log_in @user
+      @user.update_attribute(:reset_digest, nil) # Erase reset digest
       flash[:success] = "Your password has been reset."
       redirect_to @user
     else # Invalid new password
@@ -63,7 +64,7 @@ class PasswordResetsController < ApplicationController
   def check_expiration
     if @user.password_reset_expired?
       flash[:danger] = "Password reset has expired."
-      redirect_to new_passord_reset_url
+      redirect_to new_password_reset_url
     end
   end
 end
