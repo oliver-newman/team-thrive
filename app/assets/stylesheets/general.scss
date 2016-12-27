@@ -6,6 +6,9 @@
 $gray-medium-light: #eaeaea;
 $dark-green: #2CC14F;
 $light-green: #A9FFBD;
+$theme-blue: #5DBCD2;
+$theme-light-blue: #71C4D8;
+$theme-dark-blue: #3199b1;
 
 $background-color: white;
 
@@ -52,7 +55,6 @@ h1 {
 
 h2 {
   font-size: 1.2em;
-  letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
@@ -64,25 +66,41 @@ p {
   line-height: 1.5em;
 }
 
+.logo {
+  font-family: 'Nunito', sans-serif;
+  letter-spacing: -1px;
+  .logo-light {
+    color: $gray-light;
+  }
+  .logo-dark {
+    color: $theme-blue;
+  }
+}
+
 /* header */
 
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: $dark-green;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  text-decoration: none;
-	/* Don't allow users to select the logo text */
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+.navbar {
+  border-bottom: 1px solid $gray-medium-light;
+  background-color: white;
+  .link a {
+    color: $gray-light;
+  }
+  #logo {
+    float: left;
+    margin-right: 10px;
+    font-size: 1.7em;
+    padding-top: 9px;
+    text-decoration: none;
+    /* Don't allow users to select the logo text */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
+
 
 /* footer */
 
@@ -146,6 +164,17 @@ input, textarea, select, .uneditable-input {
 
 input {
   height: auto !important;
+}
+
+.btn {
+  color: white;
+  background-color: $theme-blue;
+  border-color: $theme-dark-blue;
+  &:hover, &:active, &:focus {
+    color: white;
+    background-color: $theme-light-blue;
+    border-color: $theme-dark-blue;
+  }
 }
 
 #error-explanation {
