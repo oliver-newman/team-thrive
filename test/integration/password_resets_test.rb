@@ -81,7 +81,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     get edit_password_reset_path(user.reset_token, email: user.email)
 
     # Force token to be expired
-    user.update_attribute(:reset_sent_at, 121.minutes.ago)
+    user.update_attributes(reset_sent_at: 121.minutes.ago)
 
     patch password_reset_path(user.reset_token),
           params: { email: user.email,
@@ -90,6 +90,6 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     assert_redirected_to new_password_reset_url
     follow_redirect!
-    assert_match /Password reset has expired./i, response.body
+    assert_match(/Password reset has expired./i, response.body)
   end
 end

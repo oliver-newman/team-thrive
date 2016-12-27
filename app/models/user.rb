@@ -28,7 +28,7 @@ class User < ApplicationRecord
   # session, and a remember token for the current temporary session.
   def remember
     self.remember_token = self.class.new_token
-    update_attribute(:remember_digest, self.class.digest(remember_token))
+    update_attributes(remember_digest: self.class.digest(remember_token))
   end
 
   # Returns true if given token matches the user's corresponding digest
@@ -41,7 +41,7 @@ class User < ApplicationRecord
 
   # Forgets user by deleting the server-side reference to a persistent session.
   def forget
-    update_attribute(:remember_digest, nil)
+    update_attributes(remember_digest: nil)
   end
 
   # Sends account activation email.
@@ -51,7 +51,7 @@ class User < ApplicationRecord
 
   # Activates user's account.
   def activate
-    update_columns(activated: true, activated_at: Time.zone.now)
+    update_attributes(activated: true, activated_at: Time.zone.now)
   end
 
   # Sets the password reset attributes.
