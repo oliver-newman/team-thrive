@@ -6,8 +6,7 @@ class UserTest < ActiveSupport::TestCase
                      last_name: "User",
                      email: "user@example.com",
                      password: "foobar",
-                     password_confirmation: "foobar"
-                    )
+                     password_confirmation: "foobar")
   end
 
   test "full name should be correctly formatted" do
@@ -45,6 +44,16 @@ class UserTest < ActiveSupport::TestCase
 
   test "email should not be too long" do
     @user.email = "a" * 244 + "@example.com"
+    assert_not @user.valid?
+  end
+
+  test "preferred units should be present" do
+    @user.preferred_units = nil
+    assert_not @user.valid?
+  end
+
+  test "preferred units should be feet or meters" do
+    @user.preferred_units = "smoots"
     assert_not @user.valid?
   end
 
