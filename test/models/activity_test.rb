@@ -25,6 +25,11 @@ class ActivityTest < ActiveSupport::TestCase
     assert_not @activity.valid?
   end
 
+  test "title should be at most 128 characters" do
+    @activity.title = "a" * 129
+    assert_not @activity.valid?
+  end
+
   # TODO: uncomment these when hooking up Strava API
   
   # test "sport should be present" do
