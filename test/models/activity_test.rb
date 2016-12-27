@@ -3,12 +3,10 @@ require 'test_helper'
 class ActivityTest < ActiveSupport::TestCase
   def setup
     @user = users(:oliver)
-    @activity = Activity.new(title: "Lorem ipsum", user_id: @user.id,
-                             sport: "ride", start_date: Time.zone.now,
-                             distance: 4.5, elevation_gain: 8.9,
-                             moving_time: 60000, title: "Test ride",
-                             comments: "", strava_activity_id: 812034044,
-                             user_id: @user.id)
+    @activity = @user.activities.build(title: "Lorem ipsum", sport: "ride",
+                                       start_date: Time.zone.now, distance: 4.5,
+                                       elevation_gain: 8.9, moving_time: 60000,
+                                       strava_activity_id: 812034044)
   end
 
   test "should be valid" do

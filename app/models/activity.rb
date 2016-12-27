@@ -2,6 +2,7 @@ class Activity < ApplicationRecord
   SPORTS = %w(ride run)
 
   belongs_to :user
+
   validates :user_id, presence: true
   validates :title, presence: true, length: { maximum: 128 }
   # TODO: uncomment these when hooking up to Strava API

@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token, :activation_token, :reset_token
 
+  has_many :activities
+
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :email, presence: true,
@@ -13,10 +15,10 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validates :preferred_units, presence: true, inclusion: { in: UNITS }
 
-  has_secure_password # BCrypt
-
   before_save :downcase_email
   before_create :create_activation_digest
+
+  has_secure_password # BCrypt
 
   def full_name
     "#{first_name} #{last_name}"
