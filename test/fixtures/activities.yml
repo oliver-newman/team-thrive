@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  type: 
+  sport: 'run'
   start_date: 2016-12-26 20:28:29
   distance: 1.5
   elevation_gain: 1.5
@@ -11,7 +11,7 @@ one:
   user: one
 
 two:
-  type: 
+  sport: 'ride'
   start_date: 2016-12-26 20:28:29
   distance: 1.5
   elevation_gain: 1.5

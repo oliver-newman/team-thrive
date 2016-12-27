@@ -10,13 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161225230246) do
+ActiveRecord::Schema.define(version: 20161227033141) do
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "sport"
+    t.datetime "start_date"
+    t.float    "distance"
+    t.float    "elevation_gain"
+    t.integer  "moving_time"
+    t.string   "title"
+    t.text     "comments"
+    t.integer  "strava_activity_id"
+    t.integer  "user_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["user_id", "start_date"], name: "index_activities_on_user_id_and_start_date"
+    t.index ["user_id"], name: "index_activities_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.integer  "strava_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "password_digest"
     t.string   "first_name"
     t.string   "last_name"
@@ -27,6 +43,7 @@ ActiveRecord::Schema.define(version: 20161225230246) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.string   "preferred_units",   default: "feet"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
