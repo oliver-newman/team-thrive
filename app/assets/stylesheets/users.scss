@@ -1,8 +1,4 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-// Sidebar
+/* Info */
 
 aside {
   section {
@@ -49,7 +45,42 @@ aside {
   padding-top: 15px;
 }
 
-// Users index
+/* Activities list */
+
+.activities {
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+
+    .title {
+      font-weight: bold;
+      display: block;
+      margin-left: 60px;
+    }
+
+    .user {
+      display: block;
+      margin-left: 60px;
+      padding-top: 0;
+    }
+
+    .date {
+      display: block;
+      margin-left: 60px;
+    }
+
+    .gravatar {
+      float: left;
+      margin-right: 10px;
+      margin-top: 5px;
+    }
+  }
+}
+
+/* Users index */
 
 .users {
   list-style: none;

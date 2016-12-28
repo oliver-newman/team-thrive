@@ -1,3 +1,4 @@
+# Users
 User.create!(first_name: "Oliver",
              last_name: "Newman",
              email: "oliver@whmsi.com",
@@ -32,4 +33,16 @@ User.create!(first_name: "Example",
                password_confirmation: password,
                activated: true,
                activated_at: Time.zone.now)
+end
+
+
+# Activities
+users = User.order(:created_at).take(6)
+50.times do
+  title = Faker::Lorem.sentence
+  users.each do |user|
+    user.activities.create!(title: title,
+                            start_date: Faker::Date.between(10.years.ago,
+                                                            Time.zone.now))
+  end
 end

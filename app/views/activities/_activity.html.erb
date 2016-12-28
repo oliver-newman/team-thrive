@@ -1,10 +1,12 @@
 <li id="activity-<%= activity.id %>">
   <%= link_to gravatar_for(activity.user, size: 50), activity.user %>
-  <h4 class="title">
+  <span class="title">
     <%= activity.title %>
-  </h4>
-  <p class="date"><%= activity.start_date %></p>
-  <p class="user">
+  </span>
+  <span class="user">
     <%= link_to activity.user.full_name, activity.user %>
-  </p>
+  </span>
+  <span class="date">
+    <%= activity.start_date.strftime("%B %d, %Y") %>
+  </span>
 </li>

@@ -13,9 +13,9 @@
   <div class="col-md-8">
     <% if @user.activities.any? %>
       <h3>Recent Activities</h3>
-      <ol class="activities">
+      <ul class="activities">
         <%= render @activities %>
-      </ol>
+      </ul>
       <%= will_paginate @activities %>
     <% end %>
   </div>

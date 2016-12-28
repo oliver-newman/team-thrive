@@ -105,7 +105,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "associated activities should be destroyed" do
     @user.save
-    @user.activities.create!(title: "Morning ride")
+    @user.activities.create!(title: "Morning ride", start_date: 1.year.ago)
     assert_difference "Activity.count", -1 do
       @user.destroy
     end
