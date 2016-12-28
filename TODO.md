@@ -1,0 +1,3 @@
+- goal-setting: overall fundraising target; 
+- put total stats at top of activity feed
+- 
