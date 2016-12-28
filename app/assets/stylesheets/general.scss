@@ -40,6 +40,10 @@ textarea {
   }
 }
 
+.container {
+  max-width: 1000px;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -86,6 +90,7 @@ p {
     color: $gray-light;
   }
   #logo {
+    font-weight: bold;
     float: left;
     margin-right: 10px;
     font-size: 1.7em;

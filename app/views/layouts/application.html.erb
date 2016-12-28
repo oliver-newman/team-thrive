@@ -5,10 +5,11 @@
     <%= render 'layouts/rails_default' %>
     <%= render 'layouts/shim' %>
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
   </head>
   <body>
     <%= render 'layouts/header' %>
-    <div class="container">
+    <div id="content" class="container">
       <% flash.each do |message_type, message_body| %>
         <%= content_tag(:div, message_body,
                         class: "alert alert-#{message_type}") %>
