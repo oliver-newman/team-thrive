@@ -9,11 +9,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: (params[:id]))
-    unless @user && @user.activated?
-      flash[:warning] = "No such user exists."
-      redirect_to users_url
-    end
+    @user = User.find(params[:id])
+    @microposts = @user.activities.paginate(page: params[:page])
   end
 
   def new

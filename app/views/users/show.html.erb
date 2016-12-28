@@ -9,20 +9,30 @@
       </h1>
     </section>
   </aside>
+
+  <div class="col-md-8">
+    <% if @user.activities.any? %>
+      <h3>Recent Activities</h3>
+      <ol class="activities">
+        <%= render @activities %>
+      </ol>
+      <%= will_paginate @activities %>
+    <% end %>
+  </div>
 </div>
 
-<p>Email: <%= @user.email %></p>
-
-<% if @user.strava_id %>
-  <h3>Strava Stats</h3>
-  <% strava_stats_for(@user).each do |stat, data| %>
-    <% if data.class == Hash %>
-      <h4><%= stat.titleize %>:</h4>
-      <% data.each do |substat, subdata| %>
-        <p><%= substat.titleize %>: <%= subdata %></p>
+<% if false %>
+  <% if @user.strava_id %>
+    <h3>Strava Stats</h3>
+    <% strava_stats_for(@user).each do |stat, data| %>
+      <% if data.class == Hash %>
+        <h4><%= stat.titleize %>:</h4>
+        <% data.each do |substat, subdata| %>
+          <p><%= substat.titleize %>: <%= subdata %></p>
+        <% end %>
+      <% else %>
+        <p><%= stat.titleize %>: <%= data %></p>
       <% end %>
-    <% else %>
-      <p><%= stat.titleize %>: <%= data %></p>
     <% end %>
   <% end %>
 <% end %>

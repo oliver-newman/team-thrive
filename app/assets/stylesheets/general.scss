@@ -35,6 +35,7 @@ textarea {
 
 .center {
   text-align: center;
+
   h1 {
     margin-bottom: 10px;
   }
@@ -73,9 +74,11 @@ p {
 .logo {
   font-family: 'Nunito', sans-serif;
   letter-spacing: -1px;
+
   .logo-light {
     color: $gray-light;
   }
+
   .logo-dark {
     color: $theme-blue;
   }
@@ -86,15 +89,19 @@ p {
 .navbar {
   border-bottom: 1px solid $gray-medium-light;
   background-color: white;
+
   li:hover {
     color: $theme-blue;
   }
+
   ul {
     box-shadow: none;
   }
+
   .link a {
     color: $gray-light;
   }
+
   #logo {
     font-weight: bold;
     float: left;
@@ -120,17 +127,21 @@ footer {
   padding-top: 5px;
   border-top: 1px solid $gray-medium-light;
   color: $gray-light;
+
   .logo {
     height: 50px;
     float: left;
     width: 33.3%;
+
     img {
       max-height: 100%;
       max-width: 100%;
     }
   }
+
   a {
     color: $gray-light;
+
     &:hover {
       color: $gray-light;
     }
@@ -138,6 +149,7 @@ footer {
   ul {
     float: right;
     list-style: none;
+
     li {
       float: left;
       margin-left: 15px;
@@ -162,11 +174,14 @@ input, textarea, select, .uneditable-input {
   width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
+
   &.half-field {
     width: 49.3%;
+
     &.half-field-left {
       float: left;
     }
+
     &.half-field-right {
       float:right;
     }
@@ -181,6 +196,7 @@ input {
   color: white;
   background-color: $theme-blue;
   border-color: $theme-dark-blue;
+
   &:hover, &:active, &:focus {
     color: white;
     background-color: $theme-light-blue;
@@ -194,6 +210,7 @@ input {
 
 .field_with_errors {
   @extend .has-error;
+
   .form-control {
     color: $state-danger-text;
   }
