@@ -1,21 +1,38 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  sport: 'run'
-  start_date: 2016-12-26 20:28:29
-  distance: 1.5
-  elevation_gain: 1.5
-  moving_time: 1
-  title: MyString
-  comments: MyText
-  user: one
-
-two:
+ride1:
   sport: 'ride'
-  start_date: 2016-12-26 20:28:29
+  start_date: <%= 1.day.ago %>
   distance: 1.5
   elevation_gain: 1.5
   moving_time: 1
-  title: MyString
+  title: Ride1
+  comments: Ride1
+
+ride2:
+  sport: 'ride'
+  start_date: <%= 2.hours.ago %>
+  distance: 2.5
+  elevation_gain: 2.5
+  moving_time: 100
+  title: Ride1
+  comments: Ride2
+
+run1:
+  sport: 'run'
+  start_date: <%= 3.years.ago %>
+  distance: 1.7
+  elevation_gain: 2.0
+  moving_time: 600
+  title: Run1
+  comments: Run1
+
+most_recent:
+  sport: 'run'
+  start_date: <%= Time.zone.now %>
+  distance: 100
+  elevation_gain: 1.5
+  moving_time: 100
+  title: Run today
   comments: MyText
-  user: two
+

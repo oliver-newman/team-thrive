@@ -79,4 +79,8 @@ class ActivityTest < ActiveSupport::TestCase
     # @activity.moving_time = -1
     # assert_not @activity.valid?
   # end
+  
+  test "order should be most recent first" do
+    assert_equal activities(:most_recent), Activity.first
+  end
 end
