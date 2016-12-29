@@ -64,15 +64,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should redirect show of non-activated user to 404" do
     log_in_as(@user)
-    get user_path(@non_activated_user)
-    assert_redirected_to users_url
+    assert_not @non_activated_user.activated? # Sanity check
+    assert_raises ActionController::RoutingError do
+      get user_path(@non_activated_user)
+    end
   end
 
   test "should redirect show of deleted user to 404" do
     log_in_as(@admin)
+    other_user_path = user_path(@other_user)
     delete user_path(@other_user)
-    get user_path(@other_user)
-    assert_redirected_to users_url
-    assert_not flash.empty?
+    assert_raises ActionController::RoutingError do
+      get other_user_path
+    end
   end
 end

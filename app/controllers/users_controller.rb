@@ -9,8 +9,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    # unless @user.activated? 'do something' # TODO: redirect to 404?
+    @user = User.find_by(id: params[:id])
+    not_found unless @user && @user.activated?
     @activities = @user.activities.paginate(page: params[:page])
   end
 

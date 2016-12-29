@@ -30,7 +30,7 @@ run1:
   comments: Run1
 
 most_recent:
-  sport: :run
+  sport: 'run'
   start_date: <%= Time.zone.now %>
   distance: 100
   elevation_gain: 1.5
