@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    # unless @user.activated? 'do something' # TODO: redirect to 404?
     @activities = @user.activities.paginate(page: params[:page])
   end
 

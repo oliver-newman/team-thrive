@@ -8,6 +8,7 @@ ride1:
   moving_time: 1
   title: Ride1
   comments: Ride1
+  user: oliver
 
 ride2:
   sport: 'ride'
@@ -17,6 +18,7 @@ ride2:
   moving_time: 100
   title: Ride1
   comments: Ride2
+  user: oliver
 
 run1:
   sport: 'run'
@@ -28,11 +30,24 @@ run1:
   comments: Run1
 
 most_recent:
-  sport: 'run'
+  sport: :run
   start_date: <%= Time.zone.now %>
   distance: 100
   elevation_gain: 1.5
   moving_time: 100
   title: Run today
   comments: MyText
+  user: oliver
+
+<% 30.times do |n| %>
+activity_<%= n %>:
+  sport: <%= %w(run ride).sample %>
+  title: <%= Faker::Lorem.sentence[0..-2] %>
+  start_date: <%= Faker::Date.between(5.years.ago, Time.zone.now) %>
+  distance: <%= rand(1..20) %>
+  elevation_gain: <%= rand(0..500) %>
+  moving_time: <%= rand(600..3000) %>
+  comments: <%= Faker::Lorem.sentence(10) %>
+  user: oliver
+<% end %>
 
