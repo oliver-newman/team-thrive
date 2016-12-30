@@ -5,8 +5,9 @@
   </h2>
 
   <% if logged_in? %>
-    <%= link_to "Upload an Activity", new_activity_path, class: "btn btn-lg" %>
+    <%= link_to "Upload an Activity", new_activity_path,
+                class: "btn btn-lg btn-theme" %>
   <% else %>
-    <%= link_to "Join the Team", signup_path, class: "btn btn-lg" %>
+    <%= link_to "Join the Team", signup_path, class: "btn btn-lg btn-theme" %>
   <% end %>
 </div>
