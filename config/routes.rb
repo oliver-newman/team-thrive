@@ -21,5 +21,5 @@ Rails.application.routes.draw do
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
-  resources :activities, only: [:new, :create, :destroy]
+  resources :activities, only: [:show, :new, :create, :destroy]
 end

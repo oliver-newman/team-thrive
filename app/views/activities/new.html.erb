@@ -1,0 +1,36 @@
+<h1>New Activity</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@activity) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <div class="field">
+        <%= f.label :sport %>
+        <%= f.text_field :title %>
+
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+
+        <%= f.label :start_date %>
+        <%= f.datetime_field :start_date, value: Time.zone.now.strftime("%Y-%m-%dT%T") %>
+
+        <%= f.label :strava_activity_id %>
+        <%= f.number_field :strava_activity_id %>
+
+        <%= f.label :distance %>
+        <%= f.number_field :distance %>
+
+        <%= f.label :elevation_gain %>
+        <%= f.number_field :elevation_gain %>
+
+        <%= f.label :moving_time %>
+        <%= f.number_field :moving_time %>
+
+        <%= f.text_area :comments, placeholder: "Comments" %>
+      </div>
+
+      <%= f.submit "Create Activity", class: "btn" %>
+    <% end %>
+    </div>
+</div>
+

@@ -39,9 +39,9 @@ end
 # Activities
 users = User.order(:created_at).take(6)
 50.times do
-  title = Faker::Lorem.sentence
   users.each do |user|
-    user.activities.create!(title: title,
+    user.activities.create!(title: Faker::Lorem.sentence, 
+                            sport: 'run',
                             start_date: Faker::Date.between(10.years.ago,
                                                             Time.zone.now))
   end

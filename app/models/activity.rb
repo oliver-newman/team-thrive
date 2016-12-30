@@ -6,10 +6,10 @@ class Activity < ApplicationRecord
   belongs_to :user
 
   validates :user_id, presence: true
+  validates :sport, presence: true, inclusion: { in: SPORTS }
   validates :title, presence: true, length: { maximum: 128 }
   validates :start_date, presence: true
   # TODO: uncomment these when hooking up to Strava API
-  # validates :sport, presence: true, inclusion: { in: SPORTS }
   # validates :strava_activity_id, presence: true
   # validates :distance, presence: true,
                        # numericality: { greater_than_or_equal_to: 0 }

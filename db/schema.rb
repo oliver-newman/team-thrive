@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227033141) do
+ActiveRecord::Schema.define(version: 20161230014846) do
 
   create_table "activities", force: :cascade do |t|
-    t.string   "sport"
     t.datetime "start_date"
     t.float    "distance"
     t.float    "elevation_gain"
@@ -24,6 +23,7 @@ ActiveRecord::Schema.define(version: 20161227033141) do
     t.integer  "user_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "sport"
     t.index ["user_id", "start_date"], name: "index_activities_on_user_id_and_start_date"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end

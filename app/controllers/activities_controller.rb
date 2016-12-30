@@ -1,8 +1,12 @@
 class ActivitiesController < ApplicationController
-  before_action :confirm_user_logged_in, only: [:new, :create, :destroy]
+  before_action :confirm_user_logged_in, only: [:show, :new, :create, :destroy]
+
+  def show
+    @activity = Activity.find_by(id: params[:id])
+  end
 
   def new
-    @activity = current_user.activities.new
+    @activity = current_user.activities.build
   end
 
   def create
@@ -10,6 +14,8 @@ class ActivitiesController < ApplicationController
     if @activity.save
       flash[:success] = "New activity uploaded!"
       redirect_to root_url
+    else
+      render 'new'
     end
   end
 
@@ -18,9 +24,9 @@ class ActivitiesController < ApplicationController
 
   private
 
-  def micropost_params
+  def activity_params
     params.require(:activity).permit(:title, :start_date, :sport,
                                      :strava_activity_id, :distance,
-                                     :elevation_gain, :moving_time)
+                                     :elevation_gain, :moving_time, :comments)
   end
 end
