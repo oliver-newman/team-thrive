@@ -57,30 +57,22 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :strava_id,
-                                   :password, :password_confirmation)
-    end
 
-    # before_action filters
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :strava_id,
+                                  :password, :password_confirmation)
+  end
 
-    # Checks that a user is logged in before allowing access to a page.
-    def confirm_user_logged_in
-      unless logged_in?
-        store_url # So that user is sent to the same URL after they log in
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
+  # before_action filters
 
-    # Checks that correct user is logged in before allowing access to a page.
-    def confirm_correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
+  # Checks that correct user is logged in before allowing access to a page.
+  def confirm_correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
 
-    # Checks that current user is an admin.
-    def confirm_admin_user
-      redirect_to(root_url) unless current_user.admin?
-    end
+  # Checks that current user is an admin.
+  def confirm_admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
 end
