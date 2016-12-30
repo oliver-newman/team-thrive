@@ -5,3 +5,7 @@
 <p><%= @activity.sport.titleize %></p>
 
 <p>Distance: <%= @activity.distance %></p>
+
+<%= button_to "Delete Activity", @activity, method: :delete,
+              class: "btn btn-danger",
+              data: { confirm: "Are you sure you want to delete this activity?" } %>
