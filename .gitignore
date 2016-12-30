@@ -19,3 +19,5 @@
 # Ignore Spring files.
 /spring/*.pid
 
+# Ignore secrets file
+secrets.yml

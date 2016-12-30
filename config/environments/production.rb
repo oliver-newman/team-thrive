@@ -101,4 +101,9 @@ Rails.application.configure do
 
   # wwwhisper privacy config; only allow certain users to access app
   config.middleware.insert 0, "Rack::WWWhisper"
+
+  # API Keys
+  GOOGLE_MAPS_KEY = ENV["GOOGLE_MAPS_KEY"]
+  STRAVA_CLIENT_ID = ENV["STRAVA_CLIENT_ID"]
+  STRAVA_CLIENT_SECRET = ENV["STRAVA_CLIENT_SECRET"]
 end

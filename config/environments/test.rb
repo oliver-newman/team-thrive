@@ -42,4 +42,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  # API Keys
+  GOOGLE_MAPS_KEY = Rails.application.secrets.GOOGLE_MAPS_KEY
+  STRAVA_CLIENT_ID = Rails.application.secrets.STRAVA_CLIENT_ID
+  STRAVA_CLIENT_SECRET = Rails.application.secrets.STRAVA_CLIENT_SECRET
 end
