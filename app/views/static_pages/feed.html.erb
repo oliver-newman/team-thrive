@@ -2,4 +2,9 @@
 
 <h1>Activity Feed</h1>
 
-<%= render 'shared/feed' %>
+<% if @feed_items.any? %>
+  <ol class="activities">
+    <%= render @feed_items %>
+  </ol>
+  <%= will_paginate @feed_items %>
+<% end %>
