@@ -71,6 +71,11 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # Defines a proto-feed for users
+  def feed
+    Activity.where("user_id = ?", id)
+  end
+
   class << self
     # Returns hash digest of the given string.
     def digest(string)

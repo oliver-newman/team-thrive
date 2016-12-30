@@ -4,5 +4,9 @@
     Going the distance to defeat child hunger.
   </h2>
 
-  <%= link_to "Join the Team", signup_path, class: "btn btn-lg" %>
+  <% if logged_in? %>
+    <%= link_to "Upload an Activity", new_activity_path, class: "btn btn-lg" %>
+  <% else %>
+    <%= link_to "Join the Team", signup_path, class: "btn btn-lg" %>
+  <% end %>
 </div>

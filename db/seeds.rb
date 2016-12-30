@@ -42,7 +42,11 @@ users = User.order(:created_at).take(6)
   users.each do |user|
     user.activities.create!(title: Faker::Lorem.sentence, 
                             sport: [:run, :ride].sample,
-                            start_date: Faker::Date.between(10.years.ago,
+                            distance: rand(10000),
+                            elevation_gain: rand(1000),
+                            moving_time: rand(10000),
+                            strava_activity_id: 808191805,
+                            start_date: Faker::Date.between(5.years.ago,
                                                             Time.zone.now))
   end
 end

@@ -2,6 +2,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   def setup
+    @user = users(:oliver)
     @base_title = "TeamThrive"
   end
 
@@ -25,8 +26,14 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get feed" do
+    log_in_as @user
     get feed_path
     assert_response :success
     assert_select "title", "Feed | #{@base_title}"
+  end
+
+  test "should redirect feed when not logged in" do
+    get feed_path
+    assert_redirected_to login_url
   end
 end
