@@ -41,7 +41,7 @@ users = User.order(:created_at).take(6)
 50.times do
   users.each do |user|
     user.activities.create!(title: Faker::Lorem.sentence, 
-                            sport: 'run',
+                            sport: [:run, :ride].sample,
                             start_date: Faker::Date.between(10.years.ago,
                                                             Time.zone.now))
   end

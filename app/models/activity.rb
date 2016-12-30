@@ -1,12 +1,11 @@
 class Activity < ApplicationRecord
   default_scope -> { order(start_date: :desc) }
 
-  SPORTS = %w(ride run)
-
   belongs_to :user
 
+  enum sport: [:run, :ride]
   validates :user_id, presence: true
-  validates :sport, presence: true, inclusion: { in: SPORTS }
+  validates :sport, presence: true
   validates :title, presence: true, length: { maximum: 128 }
   validates :start_date, presence: true
   # TODO: uncomment these when hooking up to Strava API
