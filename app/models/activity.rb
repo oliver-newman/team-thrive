@@ -1,9 +1,10 @@
 class Activity < ApplicationRecord
   default_scope -> { order(start_date: :desc) }
 
+  enum sport: { run: 0, ride: 1 }
+
   belongs_to :user
 
-  enum sport: [:run, :ride]
   validates :user_id, presence: true
   validates :sport, presence: true
   validates :title, presence: true, length: { maximum: 128 }
