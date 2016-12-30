@@ -71,7 +71,7 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  # Defines a proto-feed for users
+  # Defines an activity for users
   def feed
     Activity.where("user_id = ?", id)
   end

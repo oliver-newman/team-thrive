@@ -17,6 +17,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   test "should redirect create when no user is logged in" do
     assert_no_difference 'Activity.count' do
       post activities_path, params: { activity: { title: "Morning ride", 
+                                                  sport: :ride,
                                                   start_date: Time.zone.now } }
     end
     assert_redirected_to login_url
@@ -30,7 +31,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect destroy when logged in as incorrect user" do
-    log_in_as @other_user
+    log_in_as(@other_user)
     assert_no_difference 'Activity.count' do
       delete activity_path(@activity2)
     end
@@ -38,7 +39,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect to user profile after destroy" do
-    log_in_as @user
+    log_in_as(@user)
     delete activity_path(@activity3)
     assert_redirected_to user_path(@user)
   end

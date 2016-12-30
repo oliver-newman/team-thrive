@@ -9,7 +9,6 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   test "should get root" do
     get root_path
     assert_response :success # :success = "200 OK" (HTTP status code)
-    # Checks the content of the HTML title element
     assert_select "title", "#{@base_title}"
   end
 
@@ -26,7 +25,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get feed" do
-    log_in_as @user
+    log_in_as(@user)
     get feed_path
     assert_response :success
     assert_select "title", "Feed | #{@base_title}"

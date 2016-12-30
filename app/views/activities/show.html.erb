@@ -6,6 +6,10 @@
 
 <p>Distance: <%= @activity.distance %></p>
 
-<%= button_to "Delete Activity", @activity, method: :delete,
-              class: "btn btn-danger",
-              data: { confirm: "Are you sure you want to delete this activity?" } %>
+<% if current_user == @activity.user %>
+  <%= button_to "Delete Activity", @activity, method: :delete,
+                class: "btn btn-danger",
+                data: {
+                  confirm: "Are you sure you want to delete this activity?"
+                } %>
+<% end %>

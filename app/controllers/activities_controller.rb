@@ -14,7 +14,7 @@ class ActivitiesController < ApplicationController
     @activity = current_user.activities.build(activity_params)
     if @activity.save
       flash[:success] = "New activity uploaded!"
-      redirect_to root_url
+      redirect_to activity_path(@activity)
     else
       render 'new'
     end

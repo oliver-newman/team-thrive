@@ -9,6 +9,7 @@ class Activity < ApplicationRecord
   validates :sport, presence: true
   validates :title, presence: true, length: { maximum: 128 }
   validates :start_date, presence: true
+
   # TODO: uncomment these when hooking up to Strava API
   # validates :strava_activity_id, presence: true
   # validates :distance, presence: true,
