@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161230020253) do
+ActiveRecord::Schema.define(version: 20161230205806) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "start_date"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20161230020253) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "sport",              default: 0
+    t.text     "summary_polyline"
     t.index ["user_id", "start_date"], name: "index_activities_on_user_id_and_start_date"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
