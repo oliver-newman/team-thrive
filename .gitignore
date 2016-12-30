@@ -19,5 +19,5 @@
 # Ignore Spring files.
 /spring/*.pid
 
-# Ignore secrets file
-secrets.yml
+# Ignore dev/test environment variables (used by dotenv gem)
+.env

@@ -21,6 +21,7 @@ gem 'strava-api-v3',            '0.6.0'
 group :development, :test do
   gem 'sqlite3', '1.3.11'
   gem 'byebug',  '9.0.0', platform: :mri
+  gem 'dotenv-rails', '2.1.1'
 end
 
 group :development do

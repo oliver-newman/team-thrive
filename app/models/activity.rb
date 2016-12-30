@@ -30,6 +30,6 @@ class Activity < ApplicationRecord
   def map_url(size)
     "https://www.maps.googleapis.com/maps/api/staticmap?size=#{size}x#{size}" +
       "&path=weight:3%color:blue%7:Cenc:#{CGI::escape(summary_polyline)}" +
-      "&key=#{Rails.application.config.GOOGLE_MAPS_KEY}"
+      "&key=#{Rails.application.secrets.GOOGLE_MAPS_KEY}"
   end
 end
