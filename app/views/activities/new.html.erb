@@ -5,8 +5,13 @@
     <%= form_for(@activity) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="field">
-        <%= f.label :sport %>
-        <%= f.text_field :title %>
+        <%= f.label :sport %></br>
+        <div class="radio">
+          <label><%= f.radio_button :sport, :run %>Run</label>
+        </div>
+        <div class="radio">
+          <label><%= f.radio_button :sport, :ride %>Ride</label></br>
+        </div>
 
         <%= f.label :title %>
         <%= f.text_field :title %>
