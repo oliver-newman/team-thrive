@@ -6,7 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dotenv::Railtie.load
+# Use dotenv to load secrets
+Dotenv::Railtie.load unless Rails.env.production?
 
 HOSTNAME = ENV['HOSTNAME']
 
