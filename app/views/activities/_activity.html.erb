@@ -1,12 +1,15 @@
 <li id="activity-<%= activity.id %>">
   <%= link_to gravatar_for(activity.user, size: 50), activity.user %>
-  <span class="title">
-    <%= link_to activity.title, activity %>
-  </span>
   <span class="user">
     <%= link_to activity.user.full_name, activity.user %>
   </span>
+  <span class="title">
+    <%= link_to activity.title, activity %>
+  </span>
   <span class="date">
     <%= activity.start_date.strftime("%B %d, %Y") %>
+  </span>
+  <span class="data">
+    <%= activity.formatted_distance(current_user) %>
   </span>
 </li>

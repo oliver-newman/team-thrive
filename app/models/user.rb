@@ -96,6 +96,24 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  def distance_units
+    case preferred_units
+    when User.units[:feet]
+      "mi"
+    when User.units[:meters]
+      "km"
+    end
+  end
+
+  def length_units
+    case preferred_units
+    when User.units[:feet]
+      "ft"
+    when User.units[:meters]
+      "m"
+    end
+  end
+
   class << self
     # Returns hash digest of the given string.
     def digest(string)
