@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  UNITS = %w(feet meters)
 
   attr_accessor :remember_token, :activation_token, :reset_token
+
+  enum unit: { feet: 0, meters: 1 }
 
   has_many :activities, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
@@ -21,7 +22,7 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :preferred_units, presence: true, inclusion: { in: UNITS }
+  validates :preferred_units, presence: true
 
   before_save :downcase_email
   before_create :create_activation_digest
