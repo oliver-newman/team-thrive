@@ -1,0 +1,47 @@
+/* Activities list */
+
+.activities {
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid $gray-medium-light;
+
+    .title a {
+      color: black;
+      font-weight: bold;
+      display: block;
+      margin-left: 60px;
+    }
+
+    .user a {
+      color: black;
+      display: block;
+      margin-left: 60px;
+      padding-top: 0;
+    }
+
+    .date {
+      display: block;
+      margin-left: 60px;
+    }
+
+    .data {
+      display: block;
+      margin-left: 60px;
+    }
+
+    .distance {
+      display: block;
+      margin-left: 60px;
+    }
+
+    .gravatar {
+      float: left;
+      margin-right: 10px;
+      margin-top: 5px;
+    }
+  }
+}
+

@@ -3,6 +3,10 @@
   <%= link_to user.full_name, user %>
   <% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "delete", user, method: :delete,
-                                  data: { confirm: "You sure?" } %>
+                                  data: {
+                                    confirm: "Are you sure you want to " +
+                                    "delete #{user.full_name}'s account?"
+                                  },
+                                  class: "delete-link" %>
   <% end %>
 </li>
