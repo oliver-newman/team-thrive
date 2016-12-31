@@ -9,16 +9,6 @@ User.create!(first_name: "Oliver",
              activated: true,
              activated_at: Time.zone.now)
 
-User.create!(first_name: "Example",
-             last_name: "User",
-             email: "user@example.com",
-             strava_id: 5882007,
-             password:  "password",
-             password_confirmation: "password",
-             admin: true,
-             activated: true,
-             activated_at: Time.zone.now)
-
 99.times do |i|
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
@@ -50,3 +40,12 @@ users = User.order(:created_at).take(6)
                                                             Time.zone.now))
   end
 end
+
+
+# Following relationships
+users = User.all
+user = users.first
+following  = users[2..50]
+followers  = users[3..70]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }
