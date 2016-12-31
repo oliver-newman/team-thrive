@@ -37,7 +37,7 @@ class Activity < ApplicationRecord
     self.class.formatted_time(moving_time)
   end
 
-  def formatted_distance(user)
+  def formatted_distance(user = nil)
     preferred_units = user.nil? ?  User.units[:feet] : user.preferred_units
     distance_units = user.nil? ?  "mi" : user.distance_units
     raw_distance = Unit.new("#{distance} m")
@@ -51,7 +51,7 @@ class Activity < ApplicationRecord
   end
 
   # Converts a raw length to feet or meters depending on the current user.
-  def formatted_elevation_gain(user)
+  def formatted_elevation_gain(user = nil)
     preferred_units = user.nil? ?  User.units[:feet] : user.preferred_units
     length_units = user.nil? ?  "ft" : user.length_units
     raw_gain = Unit.new("#{elevation_gain} m")
