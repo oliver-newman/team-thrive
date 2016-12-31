@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
                                   dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
@@ -69,14 +70,25 @@ class User < ApplicationRecord
     UserMailer.password_reset(self).deliver_now
   end
 
-  # Returns true if user's password expiration token has expired.
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
 
-  # Defines an activity for users
+  # Returns a list of activities in the user's feed.
   def feed
     Activity.where("user_id = ?", id)
+  end
+
+  def follow(other_user)
+    following << other_user
+  end
+
+  def unfollow(other_user)
+    following.delete(other_user)
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
   end
 
   class << self
