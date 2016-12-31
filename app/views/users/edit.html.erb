@@ -17,6 +17,18 @@
       <%= f.label :last_name %>
       <%= f.text_field :last_name, class: 'form-control' %>
 
+      <%= f.label :preferred_units %></br>
+      <div class="radio">
+        <label>
+          <%= f.radio_button :preferred_units, User.units[:feet] %>Feet/Miles
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <%= f.radio_button :preferred_units, User.units[:meters] %>Meters/Kilometers
+        </label></br>
+      </div>
+
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
 
