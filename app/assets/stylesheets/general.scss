@@ -64,6 +64,22 @@ p {
   }
 }
 
+ul.pagination {
+  li:not(.active) a {
+    color: $theme-blue;
+  }
+  li.active a {
+    color: white;
+    background-color: $theme-blue;
+    border-color: $theme-dark-blue;
+
+    &:hover {
+      background-color: $theme-light-blue;
+      border-color: $theme-dark-blue;
+    }
+  }
+}
+
 /* header */
 
 .navbar {
