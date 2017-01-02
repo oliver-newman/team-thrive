@@ -47,14 +47,29 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
-  test "preferred units should be present" do
-    @user.preferred_units = nil
+  test "unit preference should be present" do
+    @user.unit_preference = nil
     assert_not @user.valid?
   end
 
-  test "preferred units should be feet or meters" do
-    @user.preferred_units = "smoots"
-    assert_not @user.valid?
+  test "unit preference should be feet or meters" do
+    assert_raise ArgumentError do
+      @user.unit_preference = "smoots"
+    end
+  end
+
+  test "distance unit should change with unit preference" do
+    @user.prefers_feet!
+    assert_equal @user.distance_unit, "mi"
+    @user.prefers_meters!
+    assert_equal @user.distance_unit, "km"
+  end
+
+  test "length unit should change with unit preference" do
+    @user.prefers_feet!
+    assert_equal @user.length_unit, "ft"
+    @user.prefers_meters!
+    assert_equal @user.length_unit, "m"
   end
 
   test "email validation should accept valid addresses" do
@@ -106,7 +121,8 @@ class UserTest < ActiveSupport::TestCase
   test "associated activities should be destroyed" do
     @user.save
     @user.activities.create!(title: "Morning ride",
-                             sport: :run,
+                             sport: "run",
+                             distance: 5000,
                              start_date: 1.year.ago)
     assert_difference "Activity.count", -1 do
       @user.destroy

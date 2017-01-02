@@ -45,7 +45,7 @@ class Activity < ApplicationRecord
     distance_unit = user.nil? ? "mi" : user.distance_unit
 
     converted_distance = raw_distance.convert_to(distance_unit)
-    "#{converted_distance.scalar.to_f.round(1)} #{distance_unit}"
+    converted_distance.round(1)
   end
 
   # Converts a raw elevation gain (in meters) to feet or meters depending on
@@ -56,7 +56,7 @@ class Activity < ApplicationRecord
     length_unit = user.nil? ?  "ft" : user.length_unit
 
     converted_gain = raw_gain.convert_to(length_unit)
-    "#{converted_gain.scalar.to_i} #{length_unit}"
+    converted_gain.round(0)
   end
 
   class << self
