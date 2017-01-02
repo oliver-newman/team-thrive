@@ -18,4 +18,10 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
       assert_match activity.title, response.body
     end
   end
+
+  test "social stats" do
+    get user_path(@user)
+    assert_select '#following', text: @user.following.count.to_s
+    assert_select '#followers', text: @user.followers.count.to_s
+  end
 end

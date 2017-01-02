@@ -26,12 +26,22 @@
   </aside>
 
   <div class="col-md-8">
-    <% if @user.activities.any? %>
-      <h3>Recent Activities</h3>
-      <ol class="activities">
-        <%= render @activities %>
-      </ol>
-      <%= will_paginate @activities %>
+    <% if @show_follow %>
+      <h3><%= @title %></h3>
+      <% if @users.any? %>
+        <ol class="users follow">
+          <%= render @users %>
+        </ol>
+      <% end %>
+      <%= will_paginate @users %>
+    <% else %>
+      <% if @user.activities.any? %>
+        <h3>Recent Activities</h3>
+        <ol class="activities">
+          <%= render @activities %>
+        </ol>
+        <%= will_paginate @activities %>
+      <% end %>
     <% end %>
   </div>
 </div>

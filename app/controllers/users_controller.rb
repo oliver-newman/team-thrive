@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  before_action :confirm_user_logged_in,  only: [:index, :edit, :update, 
-                                                 :destroy]
-  before_action :confirm_correct_user,    only: [:edit, :udpate]
-  before_action :confirm_admin_user,      only: :destroy
+  before_action :confirm_user_logged_in, only: [:index, :edit, :update, 
+                                                :destroy, :following,
+                                                :followers]
+  before_action :confirm_correct_user, only: [:edit, :udpate]
+  before_action :confirm_admin_user, only: [:destroy]
 
   def index
     @users = User.where(activated: true).paginate(page: params[:page])
@@ -12,6 +13,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     not_found unless @user && @user.activated?
     @activities = @user.activities.paginate(page: params[:page])
+    @show_follow = false
   end
 
   def new
@@ -54,6 +56,22 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "User deleted."
     redirect_to users_url
+  end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(page: params[:page])
+    @show_follow = true
+    render 'show'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    @show_follow = true
+    render 'show'
   end
 
   private
