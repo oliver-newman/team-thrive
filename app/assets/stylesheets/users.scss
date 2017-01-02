@@ -40,7 +40,7 @@ aside {
   margin-top: 15px;
 }
 
-.stats {
+.social-stats {
   overflow: auto;
   margin-top: 0;
   padding: 0;
@@ -67,7 +67,7 @@ aside {
   }
 }
 
-.user_avatars {
+.user-avatars {
   overflow: auto;
   margin-top: 10px;
 
@@ -80,8 +80,8 @@ aside {
   }
 }
 
-.users.follow {
-  padding: 0;
+#follow-form {
+  padding-top: 10px;
 }
 
 .edit-form {

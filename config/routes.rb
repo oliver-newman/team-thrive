@@ -18,8 +18,13 @@ Rails.application.routes.draw do
   match '/404', to: 'errors#not_found', via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
 
-  resources :users
+  resources :users do
+    member do # member associates user id with url (e.g., users/1/following)
+      get :following, :followers
+    end
+  end
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :activities, only: [:show, :new, :create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 end
