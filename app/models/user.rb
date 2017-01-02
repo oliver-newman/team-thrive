@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token, :activation_token, :reset_token
 
-  enum unit: { feet: 0, meters: 1 }
+  enum unit_preference: { feet: 0, meters: 1 }, _prefix: :prefers
 
   has_many :activities, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
@@ -22,7 +22,7 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :preferred_units, presence: true
+  validates :unit_preference, presence: true
 
   before_save :downcase_email
   before_create :create_activation_digest
@@ -96,20 +96,20 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
-  def distance_units
-    case preferred_units
-    when User.units[:feet]
+  def distance_unit
+    case unit_preference
+    when "feet" 
       "mi"
-    when User.units[:meters]
+    when "meters"
       "km"
     end
   end
 
-  def length_units
-    case preferred_units
-    when User.units[:feet]
+  def length_unit
+    case unit_preference
+    when "feet"
       "ft"
-    when User.units[:meters]
+    when "meters"
       "m"
     end
   end

@@ -12,11 +12,11 @@ class Activity < ApplicationRecord
   validates :sport, presence: true
   validates :title, presence: true, length: { maximum: 128 }
   validates :start_date, presence: true
+  validates :distance, presence: true,
+                       numericality: { greater_than_or_equal_to: 0 }
 
   # TODO: uncomment these when hooking up to Strava API
   # validates :strava_activity_id, presence: true
-  # validates :distance, presence: true,
-                       # numericality: { greater_than_or_equal_to: 0 }
   # validates :elevation_gain, presence: true,
                              # numericality: { greater_than_or_equal_to: 0 }
   # validates :moving_time, presence: true,
@@ -33,35 +33,30 @@ class Activity < ApplicationRecord
       "&key=#{Rails.application.secrets.GOOGLE_MAPS_KEY}"
   end
 
-  def formatted_moving_time
+  def moving_time_formatted
     self.class.formatted_time(moving_time)
   end
 
-  def formatted_distance(user = nil)
-    preferred_units = user.nil? ?  User.units[:feet] : user.preferred_units
-    distance_units = user.nil? ?  "mi" : user.distance_units
+  # Converts a raw distance (in meters) to miles or km depending on the
+  # unit preference of user (defaults to miles), and formats as a string with
+  # units.
+  def distance_formatted_for(user = nil)
     raw_distance = Unit.new("#{distance} m")
-    converted_distance = case preferred_units
-                         when User.units[:feet]
-                           raw_distance.convert_to("mi")
-                         when User.units[:meters]
-                           raw_distance.convert_to("km")
-                         end
-    "#{converted_distance.scalar.to_f.round(1)} #{distance_units}"
+    distance_unit = user.nil? ? "mi" : user.distance_unit
+
+    converted_distance = raw_distance.convert_to(distance_unit)
+    "#{converted_distance.scalar.to_f.round(1)} #{distance_unit}"
   end
 
-  # Converts a raw length to feet or meters depending on the current user.
-  def formatted_elevation_gain(user = nil)
-    preferred_units = user.nil? ?  User.units[:feet] : user.preferred_units
-    length_units = user.nil? ?  "ft" : user.length_units
+  # Converts a raw elevation gain (in meters) to feet or meters depending on
+  # the unit preference of user (defaults to feet), and formats as a
+  # string with units.
+  def elevation_gain_formatted_for(user = nil)
     raw_gain = Unit.new("#{elevation_gain} m")
-    converted_gain = case preferred_units
-                      when User.units[:feet]
-                        raw_gain.convert_to("ft")
-                      when User.units[:meters]
-                        raw_gain
-                      end
-    "#{converted_gain.scalar.to_i} #{length_units}"
+    length_unit = user.nil? ?  "ft" : user.length_unit
+
+    converted_gain = raw_gain.convert_to(length_unit)
+    "#{converted_gain.scalar.to_i} #{length_unit}"
   end
 
   class << self

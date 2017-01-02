@@ -23,6 +23,9 @@ class ActivitiesInterfaceTest < ActionDispatch::IntegrationTest
     assert_difference 'Activity.count', 1 do
       post activities_path, params: { activity: { title: title,
                                                   sport: :ride,
+                                                  distance: 500,
+                                                  moving_time: 400,
+                                                  elevation_gain: 400,
                                                   start_date: Time.zone.now } }
     end
     assert_redirected_to activity_path(@user.activities.order(created_at: :desc).first) 

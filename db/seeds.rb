@@ -31,7 +31,7 @@ users = User.order(:created_at).take(6)
 50.times do
   users.each do |user|
     user.activities.create!(title: Faker::Lorem.sentence, 
-                            sport: [:run, :ride].sample,
+                            sport: ["run", "ride"].sample,
                             distance: rand(10000),
                             elevation_gain: rand(1000),
                             moving_time: rand(10000),
@@ -49,3 +49,4 @@ following  = users[2..50]
 followers  = users[3..70]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+

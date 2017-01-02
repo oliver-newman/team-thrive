@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161231020434) do
+ActiveRecord::Schema.define(version: 20170102025540) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "start_date"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20161231020434) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
-    t.integer  "preferred_units",   default: 0
+    t.integer  "unit_preference",   default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

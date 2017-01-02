@@ -1,5 +1,5 @@
 ride1:
-  sport: :ride
+  sport: ride
   start_date: <%= 1.day.ago %>
   distance: 1.5
   elevation_gain: 1.5
@@ -9,7 +9,7 @@ ride1:
   user: oliver
 
 ride2:
-  sport: :ride
+  sport: ride
   start_date: <%= 2.hours.ago %>
   distance: 2.5
   elevation_gain: 2.5
@@ -19,7 +19,7 @@ ride2:
   user: oliver
 
 run1:
-  sport: :run
+  sport: run
   start_date: <%= 3.years.ago %>
   distance: 1.7
   elevation_gain: 2.0
@@ -29,7 +29,7 @@ run1:
   user: oliver
 
 run2:
-  sport: :run
+  sport: run
   start_date: <%= 6.months.ago %>
   distance: 5
   elevation_gain: 2.0
@@ -39,7 +39,7 @@ run2:
   user: bob
 
 most_recent:
-  sport: :run
+  sport: run
   start_date: <%= Time.zone.now %>
   distance: 100
   elevation_gain: 1.5
@@ -50,7 +50,7 @@ most_recent:
 
 <% 100.times do |n| %>
 activity_<%= n %>:
-  sport: <%= [:run, :ride].sample %>
+  sport: <%= ["run", "ride"].sample %>
   title: <%= Faker::Lorem.sentence[0..-2] %>
   start_date: <%= Faker::Date.between(5.years.ago, Time.zone.now) %>
   distance: <%= rand(1..20) %>

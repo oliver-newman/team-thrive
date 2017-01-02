@@ -17,15 +17,15 @@
       <%= f.label :last_name %>
       <%= f.text_field :last_name, class: 'form-control' %>
 
-      <%= f.label :preferred_units %></br>
+      <%= f.label :unit_preference %></br>
       <div class="radio">
         <label>
-          <%= f.radio_button :preferred_units, User.units[:feet] %>Feet/Miles
+          <%= f.radio_button :unit_preference, "feet" %>Feet/Miles
         </label>
       </div>
       <div class="radio">
         <label>
-          <%= f.radio_button :preferred_units, User.units[:meters] %>Meters/Kilometers
+          <%= f.radio_button :unit_preference, "meters" %>Meters/Kilometers
         </label></br>
       </div>
 
