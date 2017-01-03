@@ -81,7 +81,10 @@ class User < ApplicationRecord
 
   # Returns a list of activities in the user's feed.
   def feed
-    Activity.where("user_id = ?", id)
+    following_ids = "SELECT followed_id
+                       FROM relationships
+                      WHERE follower_id = :user_id"
+    Activity.where("user_id IN (#{following_ids})", user_id: id)
   end
 
   def follow(other_user)
