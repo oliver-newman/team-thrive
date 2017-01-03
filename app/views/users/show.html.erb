@@ -10,12 +10,12 @@
     </section>
     <section class="social-stats">
       <div class="social-stats">
-        <a href="<%= following_user_path(@user) %>">
+        <a href="<%= following_user_path(@user) if @user.following.any? %>">
           <strong id="following" class="social-stat">
             <%= @user.following.count %>
           </strong> Following
         </a>
-        <a href="<%= followers_user_path(@user) %>">
+        <a href="<%= followers_user_path(@user) if @user.followers.any? %>">
           <strong id="followers" class="social-stat">
             <%= @user.followers.count %>
           </strong> Followers
