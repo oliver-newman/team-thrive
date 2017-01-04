@@ -46,7 +46,9 @@ class UsersController < ApplicationController
 
   def strava_auth
     if params[:error]
-      flash[:warning] = "Strava authentication failed."
+      flash[:warning] = "Strava authentication failed. Make sure you have an " +
+                        "activated Strava account and that you are logged in " +
+                        "to Strava on this device."
       redirect_to root_url
     end
 
@@ -60,8 +62,9 @@ class UsersController < ApplicationController
       }.to_json,
       headers: {'Content-Type'=>'application/json'}
     )
+    p @strava_response.parsed_response
     strava_athlete = @strava_response.parsed_response["athlete"]
-    strava_token = @strava_response.parsed_response["access_token"],
+    strava_token = @strava_response.parsed_response["access_token"]
     unless (@user = User.find_by(strava_id: strava_athlete["id"]))
       @user = User.new(
         strava_token:     strava_token,
@@ -71,6 +74,9 @@ class UsersController < ApplicationController
         email:            strava_athlete["email"],
         unit_preference:  strava_athlete["measurement_preference"],
       )
+      unless @user.valid?
+        p @user.errors.full_messages
+      end
       unless @user.save
         # debugger
       end
