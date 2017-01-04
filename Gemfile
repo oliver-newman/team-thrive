@@ -1,9 +1,9 @@
-# Gemfile from railstutorial.org
 ruby '2.3.1'
 
 source 'https://rubygems.org'
 
 gem 'rails',                    '5.0.0.1'
+gem 'httparty',                 '0.14.0' 
 gem 'bcrypt',                   '3.1.11'
 gem 'faker',                    '1.6.6'
 gem 'will_paginate',            '3.1.0'

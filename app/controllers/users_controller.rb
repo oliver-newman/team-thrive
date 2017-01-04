@@ -1,3 +1,5 @@
+require 'httparty'
+
 class UsersController < ApplicationController
   before_action :confirm_user_logged_in, only: [:index, :edit, :update, 
                                                 :destroy, :following,
@@ -22,6 +24,10 @@ class UsersController < ApplicationController
                         "accounts."
       redirect_to current_user
     else 
+      @strava_auth_url = "https://www.strava.com/oauth/authorize?client_id=" +
+                         "#{Rails.application.secrets.STRAVA_CLIENT_ID}" +
+                         "&redirect_uri=#{strava_auth_url}" +
+                         "&response_type=code"
       @user = User.new
     end
   end
@@ -36,6 +42,35 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def strava_auth
+    @code = params[:code]
+    @strava_response = HTTParty.post(
+      "https://www.strava.com/oauth/token",
+      body: {
+        client_id: Rails.application.secrets.STRAVA_CLIENT_ID,
+        client_secret: Rails.application.secrets.STRAVA_CLIENT_SECRET,
+        code: @code
+      }.to_json,
+      headers: {'Content-Type'=>'application/json'}
+    )
+    access_token = @strava_response.parsed_response[:access_token]
+    strava_athlete = @strava_response.parsed_response[:athlete]
+
+    unless (@user = User.find_by(strava_token: access_token))
+      @user = User.new(
+        strava_token: access_token,
+        strava_id: strava_athlete[:id],
+        first_name: strava_athlete[:firstname],
+        last_name: strava_athlete[:lastname],
+        email: strava_athlete[:email],
+        unit_preference: strava_athlete[:measurement_preference]
+      )
+      redirect_to(root_url) unless @user.save
+    end
+    log_in @user
+    redirect_to @user
   end
 
   def edit
@@ -77,9 +112,9 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :strava_id,
-                                 :unit_preference, :password,
-                                 :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email,
+                                 :strava_token,:strava_id, :unit_preference,
+                                 :password, :password_confirmation)
   end
 
   # before_action filters

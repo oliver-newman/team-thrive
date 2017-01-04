@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
+  get '/strava_auth', to: 'users#strava_auth'
 
   get 'password_resets/new'
   get 'password_resets/edit'
