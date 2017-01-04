@@ -4,32 +4,18 @@ oliver:
   email: oliver@whmsi.com
   strava_id: 5882007
   admin: true
-  activated: true
-  activated_at: <%= Time.zone.now %>
 
 bob:
   first_name: Bob
   last_name: Williams
   email: bob@example.com
   strava_id: 1000000
-  activated: true
-  activated_at: <%= Time.zone.now %>
 
 lee:
   first_name: Chen
   last_name: Lee
   email: lee@example.com
   strava_id: 1000001
-  activated: true
-  activated_at: <%= Time.zone.now %>
-
-not_activated:
-  first_name: Linda
-  last_name: Simba
-  email: linda@example.com
-  strava_id: 1000002
-  activated: false
-  activated_at: nil
 
 <% 30.times do |i| %>
 user<%= i %>:
@@ -37,6 +23,4 @@ user<%= i %>:
   last_name: <%= "User#{i}" %>
   email: <%= "test#{i}@example.com" %>
   strava_id: <%= i %>
-  activated: true
-  activated_at: <%= Time.zone.now %>
 <% end %>
