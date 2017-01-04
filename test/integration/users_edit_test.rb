@@ -12,10 +12,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
 
     num_errors = 5
     patch user_path(@user), params: { user: { first_name: "",
-                                              last_name: "",
-                                              email: "test@invalid",
-                                              password: "foo",
-                                              password_confirmation: "bar" } }
+                                              last_name: "" } }
     assert_template 'users/edit' # Failed edit redirects back to edit page
     assert_select "div.alert", text: /^The form contains #{num_errors} errors/
   end
@@ -30,10 +27,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     last_name = "Bar"
     email = "foo@example.com"
     patch user_path(@user), params: { user: { first_name: first_name,
-                                              last_name: last_name,
-                                              email: email,
-                                              password: "",
-                                              password_confirmation: "" } }
+                                              last_name: last_name } }
     assert_not flash.empty?
     assert_redirected_to @user
     @user.reload

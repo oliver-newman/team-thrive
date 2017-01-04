@@ -9,12 +9,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     get signup_path
     assert_select 'form[action="/signup"]'
     assert_no_difference 'User.count' do
-      post users_path, params: { user: { first_name: "Foo",
-                                         last_name: "",
-                                         email: "user@invalid",
-                                         strava_id: 5882007,
-                                         password: "bar",
-                                         password_confirmation: "baz" } }
+      # TODO: bad signup with Strava
     end
     assert_template 'users/new'
     assert_select 'div#error-explanation'
@@ -23,12 +18,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   test "valid signup with account activation" do
     get signup_path
     assert_difference 'User.count', 1 do
-      post users_path, params: { user: { first_name: "Test",
-                                         last_name: "User",
-                                         email: "user@example.com",
-                                         strava_id: 5882007,
-                                         password: "password",
-                                         password_confirmation: "password" } }
+      # TODO: valid signup with Strava
     end
     # Check that exactly one email was sent since clear in setup
     assert_equal 1, ActionMailer::Base.deliveries.size

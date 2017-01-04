@@ -3,7 +3,6 @@ oliver:
   last_name: Newman
   email: oliver@example.com
   strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
   admin: true
   activated: true
   activated_at: <%= Time.zone.now %>
@@ -13,7 +12,6 @@ bob:
   last_name: Williams
   email: bob@example.com
   strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
 
@@ -22,7 +20,6 @@ lee:
   last_name: Lee
   email: lee@example.com
   strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
 
@@ -31,7 +28,6 @@ not_activated:
   last_name: Simba
   email: linda@example.com
   strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
   activated: false
   activated_at: nil
 
@@ -41,7 +37,6 @@ user<%= i %>:
   last_name: <%= "User#{i}" %>
   email: <%= "test#{i}@example.com" %>
   strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
 <% end %>

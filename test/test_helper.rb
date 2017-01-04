@@ -23,6 +23,7 @@ end
 
 class ActionDispatch::IntegrationTest
   # Login in as a particular user
+  # TODO: integrate with Strava
   def log_in_as(user, password: 'password', remember_me: '1')
     post login_path, params: { session: { email: user.email,
                                           password: password,

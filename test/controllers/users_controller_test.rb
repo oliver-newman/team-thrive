@@ -41,8 +41,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should protect admin attribute from edits" do
     log_in_as(@user)
     assert_not @user.admin?
-    patch user_path(@user), params: { user: { password: "password",
-                                              password_confirmation: "password",
+    patch user_path(@user), params: { user: { last_name: "blahblahblah",
                                               admin: true } }
     assert_not @user.reload.admin?
   end

@@ -5,8 +5,8 @@ class UserTest < ActiveSupport::TestCase
     @user = User.new(first_name: "Test",
                      last_name: "User",
                      email: "user@example.com",
-                     password: "foobar",
-                     password_confirmation: "foobar")
+                     # TODO: Strava stuff
+                    )
   end
 
   test "full name should be correctly formatted" do
@@ -102,16 +102,6 @@ class UserTest < ActiveSupport::TestCase
     @user.email = mixed_case_email
     @user.save
     assert_equal mixed_case_email.downcase, @user.reload.email
-  end
-
-  test "passsword should be present" do
-    @user.password = @user.password_confirmation = " " * 6
-    assert_not @user.valid?
-  end
-
-  test "password should be long enough" do
-    @user.password = @user.password_confirmation = "z" * 5
-    assert_not @user.valid?
   end
 
   test "authenticated? should return false for user with nil remember digest" do
