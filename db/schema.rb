@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104040634) do
+ActiveRecord::Schema.define(version: 20170104043517) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "start_date"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20170104040634) do
     t.string   "activation_digest"
     t.boolean  "activated",         default: false
     t.datetime "activated_at"
-    t.string   "reset_digest"
     t.datetime "reset_sent_at"
     t.integer  "unit_preference",   default: 0
     t.string   "strava_token"
