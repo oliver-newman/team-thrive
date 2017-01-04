@@ -1,12 +1,15 @@
 # TODOs
 
 ## Major refactoring with Strava integration
+- *BIG How is login going to work?*
+
 - Don't let users change their email (or at least find a way to do it while
   enforcing a valid email)
 - No passwords
 - No password resets
 - No account activations
 - Sign-in and login are the same page ('welcome' page?)
+
 
 ## Testing
 - Test changing of preferred units

@@ -17,6 +17,8 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
+  validates :strava_id, presence: true
+  validates :strava_token, presence: true
   validates :email, presence: true,
                     length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
