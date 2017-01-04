@@ -8,12 +8,12 @@ class UsersController < ApplicationController
   before_action :confirm_admin_user, only: [:destroy]
 
   def index
-    @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.paginate(page: params[:page])
   end
 
   def show
     @user = User.find_by(id: params[:id])
-    not_found unless @user && @user.activated?
+    not_found unless @user
     @activities = @user.activities.paginate(page: params[:page])
     @show_follow = false
   end
@@ -35,9 +35,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email
-      flash[:info] = "A message with a confirmation link has been sent to " +
-                     "your email address. Please follow the link to activate your account."
+      log_in @user
+      flash[:success] = "Welcome to TeamThrive!"
       redirect_to root_url
     else
       render 'new'
@@ -62,9 +61,10 @@ class UsersController < ApplicationController
       }.to_json,
       headers: {'Content-Type'=>'application/json'}
     )
-    p @strava_response.parsed_response
+
     strava_athlete = @strava_response.parsed_response["athlete"]
     strava_token = @strava_response.parsed_response["access_token"]
+
     unless (@user = User.find_by(strava_id: strava_athlete["id"]))
       @user = User.new(
         strava_token:     strava_token,
@@ -77,7 +77,6 @@ class UsersController < ApplicationController
       unless @user.save
         # TODO debugger
       end
-      @user.activate
     end
     log_in @user
     redirect_to root_url

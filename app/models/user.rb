@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  attr_accessor :remember_token, :activation_token
+  attr_accessor :remember_token
 
   enum unit_preference: { feet: 0, meters: 1 }, _prefix: :prefers
 
@@ -26,7 +26,6 @@ class User < ApplicationRecord
   validates :unit_preference, presence: true
 
   before_save :downcase_email
-  before_create :create_activation_digest
 
   def full_name
     "#{first_name} #{last_name}"
@@ -50,16 +49,6 @@ class User < ApplicationRecord
   # Forgets user by deleting the server-side reference to a persistent session.
   def forget
     update_attributes(remember_digest: nil)
-  end
-
-  # Sends account activation email.
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
-  end
-
-  # Activates user's account.
-  def activate
-    update_attributes(activated: true, activated_at: Time.zone.now)
   end
 
   # Returns a list of activities in the user's feed.
@@ -119,11 +108,5 @@ class User < ApplicationRecord
   # Converts email to all lower-case.
   def downcase_email
    email.downcase!
-  end
-
-  # Creates and assigns activation token and digest for user.
-  def create_activation_digest
-    self.activation_token = User.new_token
-    self.activation_digest = User.digest(activation_token)
   end
 end
