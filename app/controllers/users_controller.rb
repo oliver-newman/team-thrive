@@ -74,11 +74,8 @@ class UsersController < ApplicationController
         email:            strava_athlete["email"],
         unit_preference:  strava_athlete["measurement_preference"],
       )
-      unless @user.valid?
-        p @user.errors.full_messages
-      end
       unless @user.save
-        # debugger
+        # TODO debugger
       end
       @user.activate
     end
