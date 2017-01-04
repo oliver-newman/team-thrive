@@ -3,9 +3,7 @@ User.create!(first_name: "Oliver",
              last_name: "Newman",
              email: "onewman1@swarthmore.edu",
              strava_id: 5882007,
-             admin: true,
-             activated: true,
-             activated_at: Time.zone.now)
+             admin: true)
 
 99.times do |i|
   first_name = Faker::Name.first_name
@@ -15,9 +13,7 @@ User.create!(first_name: "Oliver",
   User.create!(first_name: first_name,
                last_name: last_name,
                email: email,
-               strava_id: strava_id,
-               activated: true,
-               activated_at: Time.zone.now)
+               strava_id: strava_id)
 end
 
 
