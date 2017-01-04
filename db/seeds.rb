@@ -1,7 +1,7 @@
 # Users
 User.create!(first_name: "Oliver",
              last_name: "Newman",
-             email: "oliver@whmsi.com",
+             email: "onewman1@swarthmore.edu",
              strava_id: 5882007,
              password:  "password",
              password_confirmation: "password",

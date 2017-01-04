@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :confirm_user_logged_in, only: [:index, :edit, :update, 
                                                 :destroy, :following,
                                                 :followers]
-  before_action :confirm_correct_user, only: [:edit, :udpate]
+  before_action :confirm_correct_user, only: [:edit, :update]
   before_action :confirm_admin_user, only: [:destroy]
 
   def index
@@ -24,10 +24,10 @@ class UsersController < ApplicationController
                         "accounts."
       redirect_to current_user
     else 
-      @strava_auth_url = "https://www.strava.com/oauth/authorize?client_id=" +
-                         "#{Rails.application.secrets.STRAVA_CLIENT_ID}" +
-                         "&redirect_uri=#{strava_auth_url}" +
-                         "&response_type=code"
+      @strava_access_url = "https://www.strava.com/oauth/authorize?client_id=" +
+                           "#{Rails.application.secrets.STRAVA_CLIENT_ID}" +
+                           "&redirect_uri=#{strava_auth_url}" +
+                           "&response_type=code"
       @user = User.new
     end
   end
@@ -45,32 +45,41 @@ class UsersController < ApplicationController
   end
 
   def strava_auth
-    @code = params[:code]
+    if params[:error]
+      flash[:warning] = "Strava authentication failed."
+      redirect_to root_url
+    end
+
+    # Exchange code for Strava API access token
     @strava_response = HTTParty.post(
       "https://www.strava.com/oauth/token",
       body: {
-        client_id: Rails.application.secrets.STRAVA_CLIENT_ID,
-        client_secret: Rails.application.secrets.STRAVA_CLIENT_SECRET,
-        code: @code
+        client_id:      Rails.application.secrets.STRAVA_CLIENT_ID,
+        client_secret:  Rails.application.secrets.STRAVA_CLIENT_SECRET,
+        code:           params[:code]
       }.to_json,
       headers: {'Content-Type'=>'application/json'}
     )
-    access_token = @strava_response.parsed_response[:access_token]
-    strava_athlete = @strava_response.parsed_response[:athlete]
-
-    unless (@user = User.find_by(strava_token: access_token))
+    strava_athlete = @strava_response.parsed_response["athlete"]
+    strava_token = @strava_response.parsed_response["access_token"],
+    unless (@user = User.find_by(strava_id: strava_athlete["id"]))
       @user = User.new(
-        strava_token: access_token,
-        strava_id: strava_athlete[:id],
-        first_name: strava_athlete[:firstname],
-        last_name: strava_athlete[:lastname],
-        email: strava_athlete[:email],
-        unit_preference: strava_athlete[:measurement_preference]
+        strava_token:     strava_token,
+        strava_id:        strava_athlete["id"],
+        first_name:       strava_athlete["firstname"],
+        last_name:        strava_athlete["lastname"],
+        email:            strava_athlete["email"],
+        unit_preference:  strava_athlete["measurement_preference"],
+        password: "password",
+        password_confirmation: "password",
       )
-      redirect_to(root_url) unless @user.save
+      unless @user.save
+        # debugger
+      end
+      @user.activate
     end
     log_in @user
-    redirect_to @user
+    redirect_to root_url
   end
 
   def edit
@@ -112,9 +121,14 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email,
-                                 :strava_token,:strava_id, :unit_preference,
-                                 :password, :password_confirmation)
+    params.require(:user).permit(:first_name,
+                                 :last_name,
+                                 :email,
+                                 :strava_token,
+                                 :strava_id,
+                                 :unit_preference,
+                                 :password,
+                                 :password_confirmation)
   end
 
   # before_action filters
