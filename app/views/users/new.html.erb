@@ -4,32 +4,10 @@
 
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
-    <%= form_for(@user, url: signup_path) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-
-      <%= f.text_field :first_name, class: "half-field half-field-left form-control",
-                                      placeholder: "First name" %>
-      <%= f.text_field :last_name, class: "half-field half-field-right form-control",
-                                     placeholder: "Last name" %>
-
-      <%= f.email_field :email, class: "form-control", 
-                                   placeholder: "Email" %>
-                            
-      <%= f.text_field :strava_id, class: "form-control",
-                                      placeholder: "Strava ID" %>
-
-      <%= f.password_field :password, class: "form-control", 
-                                         placeholder: "Password" %>
-      <%= f.password_field :password_confirmation, class: "form-control",
-                              placeholder: "Confirm password" %>
-
-      <%= f.submit "Create My Account", class: "btn btn-theme" %>
-    <% end %>
-
     <%= link_to image_tag("connect_with_strava/" +
                             "btn_strava_connectwith_light/" +
                             "btn_strava_connectwith_light.png",
                           alt: "Connect with Strava"),
                 @strava_access_url %>
-</div>
+  </div>
 </div>

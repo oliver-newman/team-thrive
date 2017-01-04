@@ -21,13 +21,10 @@ class User < ApplicationRecord
                     length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  # validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validates :unit_preference, presence: true
 
   before_save :downcase_email
   before_create :create_activation_digest
-
-  has_secure_password # BCrypt
 
   def full_name
     "#{first_name} #{last_name}"
@@ -61,22 +58,6 @@ class User < ApplicationRecord
   # Activates user's account.
   def activate
     update_attributes(activated: true, activated_at: Time.zone.now)
-  end
-
-  # Sets the password reset attributes.
-  def create_reset_digest
-    self.reset_token = User.new_token
-    update_attributes(reset_digest: User.digest(reset_token),
-                      reset_sent_at: Time.zone.now)
-  end
-
-  # Sends password reset email.
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
-  end
-
-  def password_reset_expired?
-    reset_sent_at < 2.hours.ago
   end
 
   # Returns a list of activities in the user's feed.

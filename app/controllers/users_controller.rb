@@ -70,8 +70,6 @@ class UsersController < ApplicationController
         last_name:        strava_athlete["lastname"],
         email:            strava_athlete["email"],
         unit_preference:  strava_athlete["measurement_preference"],
-        password: "password",
-        password_confirmation: "password",
       )
       unless @user.save
         # debugger
@@ -126,9 +124,7 @@ class UsersController < ApplicationController
                                  :email,
                                  :strava_token,
                                  :strava_id,
-                                 :unit_preference,
-                                 :password,
-                                 :password_confirmation)
+                                 :unit_preference)
   end
 
   # before_action filters
