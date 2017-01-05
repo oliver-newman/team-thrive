@@ -68,6 +68,7 @@ ul.pagination {
   li:not(.active) a {
     color: $theme-blue;
   }
+
   li.active a {
     color: white;
     background-color: $theme-blue;
@@ -105,7 +106,6 @@ ul.pagination {
     font-size: 1.7em;
     padding-top: 9px;
     text-decoration: none;
-    /* Don't allow users to select the logo text */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -142,6 +142,7 @@ footer {
       color: $gray-light;
     }
   }
+
   ul {
     float: right;
     list-style: none;
@@ -215,6 +216,7 @@ input {
 .checkbox {
   margin-top: 10px;
   margin-bottom: 10px;
+
   span {
     margin-left: 20px;
     font-weight: normal;

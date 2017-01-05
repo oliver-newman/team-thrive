@@ -1,18 +1,26 @@
 class SessionsController < ApplicationController
   def new
+    remember_me = params[:session][:remember_me] ? "1" : "0"
+    redirect_to "https://www.strava.com/oauth/authorize?" +
+    		"client_id=#{Rails.application.secrets.STRAVA_CLIENT_ID}" +
+    		"&redirect_uri=#{strava_auth_url}" +
+    		"&state=#{remember_me}" +
+    		"&response_type=code"
   end
 
   def create
-    @user = User.find_by(email: params[:session][:email].downcase)
-    if @user && @user.authenticate(params[:session][:password])
-      log_in @user    # Temporary session cookie
-      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_back_or_to @user
-    else
-      # Login failed
-      flash.now[:danger] = 'Invalid email/password combination'
-      render 'new'
+    if params["error"]
+      flash[:warning] = "Strava authentication failed. Make sure you have an " +
+                        "activated Strava account and that you are logged in " +
+                        "to Strava on this device."
+      redirect_to root_url
     end
+
+    @user = User.from_strava(strava_access_info(params["code"]))
+
+    log_in @user
+    params["state"] == "1" ? remember(@user) : forget(@user)
+    redirect_back_or_to @user
   end
 
   def destroy

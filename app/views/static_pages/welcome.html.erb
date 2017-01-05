@@ -4,17 +4,13 @@
     Going the distance to defeat child hunger.
   </h2>
 
-  <% if logged_in? %>
-    <%= link_to "Upload an Activity", new_activity_path,
-                class: "btn btn-lg btn-theme" %>
-  <% else %>
-    <%= link_to image_tag("connect_with_strava/" +
-                            "btn_strava_connectwith_orange/" +
-                            "btn_strava_connectwith_orange@2x.png",
-                          alt: "Connect with Strava"),
-                "https://www.strava.com/oauth/authorize?" +
-                "client_id=#{Rails.application.secrets.STRAVA_CLIENT_ID}" +
-                "&redirect_uri=#{strava_auth_url}" +
-                "&response_type=code" %>
+  <%=  form_for(:session, url: strava_auth_url) do |f| %>
+    <%= image_submit_tag "connect_with_strava/btn_strava_connectwith_light" +
+                         "/btn_strava_connectwith_light@2x.png",
+                         class: "strava-submit" %>
+    <%= f.label :remember_me, class: "checkbox inline" do %>
+      <%= f.check_box :remember_me %>
+      <span>Keep me logged in</span>
+    <% end %>
   <% end %>
 </div>

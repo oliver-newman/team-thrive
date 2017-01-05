@@ -18,20 +18,6 @@ class UsersController < ApplicationController
     @show_follow = false
   end
 
-  def new
-    if logged_in? # Don't let users who are already logged in sign up
-      flash[:warning] = "Users who are already logged in cannot create new " +
-                        "accounts."
-      redirect_to current_user
-    else 
-      @strava_access_url = "https://www.strava.com/oauth/authorize?client_id=" +
-                           "#{Rails.application.secrets.STRAVA_CLIENT_ID}" +
-                           "&redirect_uri=#{strava_auth_url}" +
-                           "&response_type=code"
-      @user = User.new
-    end
-  end
-
   def create
     @user = User.new(user_params)
     if @user.save

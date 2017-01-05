@@ -5,12 +5,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:lee)
   end
 
-  test "login with invalid credentials" do
-    get login_path
-    assert_template 'sessions/new'
-  end
-
-  test "login with valid information then logout" do
+  test "login then logout" do
     get login_path
     # TODO: log in
     assert_redirected_to @user

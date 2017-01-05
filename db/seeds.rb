@@ -1,13 +1,4 @@
 # Users
-User.create!(
-  first_name: "Oliver",
-  last_name: "Newman",
-  email: "onewman1@swarthmore.edu",
-  strava_id: 5882007,
-  strava_token: Faker::Crypto.sha1,
-  admin: true
-)
-
 99.times do |i|
   User.create!(
     first_name: Faker::Name.first_name,
