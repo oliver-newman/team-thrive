@@ -4,11 +4,14 @@ class StaticPagesController < ApplicationController
   def welcome
     # TODO: instead, confirm that user is NOT logged in
     if logged_in?
-      redirect_to current_user
+      redirect_to dashboard_url
     end
   end
 
   def about
+  end
+
+  def dashboard
   end
 
   def feed

@@ -2,14 +2,13 @@ require 'test_helper'
 
 class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
-    @user = users(:lee)
+    @user = users(:oliver)
   end
 
   test "login then logout" do
-    get login_path
-    # TODO: log in
-    assert_redirected_to @user
-    follow_redirect!
+    get root_path
+
+    post 'https://strava.com/', params: { session: { remember_me: "0" } }
 
     assert_template 'users/show'
     assert_select "a[href=?]", login_path, count: 0

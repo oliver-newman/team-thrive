@@ -61,6 +61,8 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.4)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     debug_inspector (0.0.2)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
@@ -87,6 +89,7 @@ GEM
     guard-minitest (2.4.4)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
+    hashdiff (0.3.2)
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
       mimemagic
@@ -179,6 +182,7 @@ GEM
       ffi (>= 0.5.0)
     ruby-progressbar (1.8.1)
     ruby-units (2.1.0)
+    safe_yaml (1.0.4)
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -217,6 +221,10 @@ GEM
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)
+    webmock (2.3.2)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -255,6 +263,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (= 3.0.0)
   web-console (= 3.1.1)
+  webmock (= 2.3.2)
   will_paginate (= 3.1.0)
 
 RUBY VERSION

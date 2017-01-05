@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/help',          to: 'static_pages#help'
   get '/about',         to: 'static_pages#about'
   get '/feed',          to: 'static_pages#feed'
+  get '/dashboard',     to: 'static_pages#dashboard'
   get '/strava_auth',   to: 'sessions#create'
   post '/strava_auth',  to: 'sessions#new'
   delete '/logout',     to: 'sessions#destroy'
