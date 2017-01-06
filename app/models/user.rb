@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :strava_token
 
   enum unit_preference: { feet: 0, meters: 1 }, _prefix: :prefers
 
@@ -89,6 +89,11 @@ class User < ApplicationRecord
     end
   end
 
+  # Returns a Strava API client using the user's Strava access token.
+  def strava_client
+    @strava_client ||= Strava::Api::V3::Client.new(access_token: strava_token)
+  end
+
   class << self
     # Returns hash digest of the given string.
     def digest(string)
@@ -105,13 +110,13 @@ class User < ApplicationRecord
     # Finds or creates user using data from linked Strava account.
     def from_strava(strava_response)
       strava_athlete = strava_response["athlete"]
-      where(strava_id: strava_athlete["id"]).find_or_create_by(
-        strava_token:    strava_response["access_token"],
-        first_name:      strava_athlete["firstname"],
-        last_name:       strava_athlete["lastname"],
-        email:           strava_athlete["email"],
-        unit_preference: strava_athlete["measurement_preference"]
-      )
+      find_or_create_by(strava_id: strava_athlete["id"]) do |user|
+        user.strava_token    = strava_response["access_token"]
+        user.first_name      = strava_athlete["firstname"]
+        user.last_name       = strava_athlete["lastname"]
+        user.email           = strava_athlete["email"]
+        user.unit_preference = strava_athlete["measurement_preference"]
+      end
     end
   end
 
