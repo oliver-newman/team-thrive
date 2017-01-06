@@ -1,0 +1,2 @@
+class StravaController < ApplicationController
+end
