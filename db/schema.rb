@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104224322) do
+ActiveRecord::Schema.define(version: 20170107030130) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "start_date"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170104224322) do
     t.datetime "updated_at",         null: false
     t.text     "summary_polyline"
     t.integer  "sport"
+    t.index ["strava_activity_id"], name: "index_activities_on_strava_activity_id", unique: true
     t.index ["user_id", "start_date"], name: "index_activities_on_user_id_and_start_date"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
