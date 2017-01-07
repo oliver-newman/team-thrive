@@ -106,18 +106,6 @@ class User < ApplicationRecord
     def new_token
       SecureRandom.urlsafe_base64
     end
-
-    # Finds or creates user using data from linked Strava account.
-    def from_strava(strava_response)
-      strava_athlete = strava_response["athlete"]
-      where(strava_id: strava_athlete["id"]).find_or_create_by(
-        strava_token:    strava_response["access_token"],
-        first_name:      strava_athlete["firstname"],
-        last_name:       strava_athlete["lastname"],
-        email:           strava_athlete["email"],
-        unit_preference: strava_athlete["measurement_preference"]
-      )
-    end
   end
 
   private

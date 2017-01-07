@@ -16,7 +16,15 @@ class SessionsController < ApplicationController
       redirect_to root_url
     end
 
-    @user = User.from_strava(strava_access_info(params["code"]))
+    strava_response = strava_access_info(params["code"])
+    strava_athlete = strava_response["athlete"]
+    @user = User.find_or_create_by(strava_id: strava_athlete["id"]) do |user|
+      user.strava_token    = strava_response["access_token"]
+      user.first_name      = strava_athlete["firstname"]
+      user.last_name       = strava_athlete["lastname"]
+      user.email           = strava_athlete["email"]
+      user.unit_preference = strava_athlete["measurement_preference"]
+    end
 
     log_in @user
     params["state"] == "1" ? remember(@user) : forget(@user)
