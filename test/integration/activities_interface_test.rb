@@ -22,6 +22,7 @@ class ActivitiesInterfaceTest < ActionDispatch::IntegrationTest
     title = "Super duper early morning test ride"
     assert_difference 'Activity.count', 1 do
       post activities_path, params: { activity: { title: title,
+                                                  strava_activity_id: 100293847,
                                                   sport: :ride,
                                                   distance: 500,
                                                   moving_time: 400,
