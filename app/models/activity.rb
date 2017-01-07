@@ -2,6 +2,7 @@ class Activity < ApplicationRecord
   default_scope -> { order(start_date: :desc) }
 
   DOLLARS_PER_KM = { 'run': 0.1, 'ride': 0.02 }
+  DOLLARS_PER_MEAL = 3.00
 
   enum sport: { run: 0, ride: 1 }
 
@@ -19,4 +20,19 @@ class Activity < ApplicationRecord
   validates :moving_time, presence: true,
                           numericality: { greater_than_or_equal_to: 0 }
 
+  class << self
+    def total_sport_distance(sport)
+      where(sport: sport).sum(:distance)
+    end
+
+    def total_dollars_raised
+      sports.map { |sport, _|
+        total_sport_distance(sport) * DOLLARS_PER_KM[sport.to_sym] / 1000.0
+      }.sum
+    end
+
+    def total_meals_funded
+      total_dollars_raised / DOLLARS_PER_MEAL
+    end
+  end
 end

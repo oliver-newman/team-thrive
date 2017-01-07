@@ -12,7 +12,7 @@ class StaticPagesController < ApplicationController
   end
 
   def dashboard
-    @progress = current_user.percent_progress
+    @user_progress = current_user.percent_progress
   end
 
   def feed

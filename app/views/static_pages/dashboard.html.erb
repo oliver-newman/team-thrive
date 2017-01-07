@@ -1,14 +1,28 @@
 <% provide(:title, "Dashboard") %>
 
-<h1>Dashboard</h1>
+<h3>TeamThrive Totals</h3>
+<p><%= pluralize(User.count, 'user') %></p>
+<p><%= Activity.count %> activities uploaded</p>
+<% Activity.sports.each do |sport, _| %>
+  <p>
+    Total <%= sport %> distance:
+    <%= distance_formatted_for(Activity.total_sport_distance(sport),
+                               current_user) %>
+  </p>
+<% end %>
+<p>Total fundraising: $<%= "#{'%.2f' % Activity.total_dollars_raised}" %></p>
+<p>Total meals funded: <%= Activity.total_meals_funded.round(1) %></p>
+
+<h3>My Impact</h3>
 
 <div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="<%= @progress %>"
-       aria-valuemin="0" aria-valuemax="100" style="width:<%= @progress %>%">
+  <div class="progress-bar" role="progressbar"
+       aria-valuenow="<%= @user_progress %>" aria-valuemin="0"
+       aria-valuemax="100" style="width:<%= @user_progress %>%">
   </div>
 </div>
 <center>
-  <%= @progress.to_i %>% of goal complete
+  <%= current_user.percent_progress.to_i %>% of goal complete
 </center>
 
 
