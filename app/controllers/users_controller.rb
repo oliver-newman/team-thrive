@@ -1,7 +1,7 @@
 require 'httparty'
 
 class UsersController < ApplicationController
-  before_action :confirm_user_logged_in, only: [:index, :edit, :update, 
+  before_action :confirm_user_logged_in, only: [:edit, :update, 
                                                 :destroy, :following,
                                                 :followers]
   before_action :confirm_correct_user, only: [:edit, :update]
@@ -27,45 +27,6 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
-  end
-
-  def strava_auth
-    if params[:error]
-      flash[:warning] = "Strava authentication failed. Make sure you have an " +
-                        "activated Strava account and that you are logged in " +
-                        "to Strava on this device."
-      redirect_to root_url
-    end
-
-    # Exchange code for Strava API access token
-    @strava_response = HTTParty.post(
-      "https://www.strava.com/oauth/token",
-      body: {
-        client_id:      Rails.application.secrets.STRAVA_CLIENT_ID,
-        client_secret:  Rails.application.secrets.STRAVA_CLIENT_SECRET,
-        code:           params[:code]
-      }.to_json,
-      headers: {'Content-Type'=>'application/json'}
-    )
-
-    strava_athlete = @strava_response.parsed_response["athlete"]
-    strava_token = @strava_response.parsed_response["access_token"]
-
-    unless (@user = User.find_by(strava_id: strava_athlete["id"]))
-      @user = User.new(
-        strava_token:     strava_token,
-        strava_id:        strava_athlete["id"],
-        first_name:       strava_athlete["firstname"],
-        last_name:        strava_athlete["lastname"],
-        email:            strava_athlete["email"],
-        unit_preference:  strava_athlete["measurement_preference"],
-      )
-      unless @user.save
-        # TODO debugger
-      end
-    end
-    log_in @user
-    redirect_to root_url
   end
 
   def edit

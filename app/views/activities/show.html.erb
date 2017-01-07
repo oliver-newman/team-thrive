@@ -4,11 +4,14 @@
 
 <p><%= @activity.sport.titleize %></p>
 
-<p>Distance: <%= @activity.distance_formatted_for(current_user) %></p>
+<p>Distance: <%= distance_formatted_for(@activity.distance, current_user) %></p>
 
-<p>Elevation Gain: <%= @activity.elevation_gain_formatted_for(current_user) %></p>
+<p>
+  Elevation Gain:
+  <%= elevation_gain_formatted_for(@activity.elevation_gain, current_user) %>
+</p>
 
-<p>Time: <%= @activity.moving_time_formatted %></p>
+<p>Time: <%= moving_time_formatted(@activity.moving_time) %></p>
 
 <% if current_user == @activity.user %>
   <%= button_to "Delete Activity", @activity, method: :delete,

@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get '/feed',          to: 'static_pages#feed'
   get '/dashboard',     to: 'static_pages#dashboard'
   get '/strava_auth',   to: 'sessions#create'
-  post '/strava_auth',  to: 'sessions#new'
+  get '/upload',        to: 'activities#upload'
+  post '/login',        to: 'sessions#new'
   delete '/logout',     to: 'sessions#destroy'
 
   match '/404',       to: 'errors#not_found', via: :all

@@ -10,6 +10,11 @@ class ActivitiesController < ApplicationController
     @activity = current_user.activities.build
   end
 
+  def upload
+    @new_activity = current_user.activities.build
+    @activities = current_user.strava_client.list_athlete_activities
+  end
+
   def create
     @activity = current_user.activities.build(activity_params)
     if @activity.save
@@ -30,9 +35,9 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:title, :start_date, :sport,
-                                     :strava_activity_id, :distance,
-                                     :elevation_gain, :moving_time, :comments)
+    params.require(:activity).permit(:strava_activity_id, :title, :start_date,
+                                     :sport, :distance, :elevation_gain,
+                                     :moving_time, :comments)
   end
 
   def confirm_correct_user

@@ -1,0 +1,36 @@
+<% provide(:title, "Activity Upload") %>
+
+<h1>Activity Upload</h1>
+
+<% if @activities.any? %>
+  <ol class="activities">
+    <% @activities.each do |activity| %>
+      <li id="activity-<%= activity["id"] %>">
+        <span class="title">
+          <%= activity["title"] %>
+        </span>
+        <span class="date">
+          <%= activity["start_date"].to_datetime.strftime("%B %d, %Y") %>
+        </span>
+        <span class="data">
+          <%= distance_formatted_for(activity["distance"], current_user) %>
+        </span>
+        <span class="upload">
+          <%= form_for(@new_activity) do |f| %>
+            <%= f.hidden_field :strava_activity_id, value: activity["id"] %>
+            <%= f.hidden_field :title, value: activity["name"] %>
+            <%= f.hidden_field :start_date, value: activity["start_date"].to_datetime %>
+            <%= f.hidden_field :sport, value: activity["type"].downcase %>
+            <%= f.hidden_field :distance, value: activity["distance"] %>
+            <%= f.hidden_field :elevation_gain, value: activity["total_elevation_gain"] %>
+            <%= f.hidden_field :moving_time, value: activity["moving_time"] %>
+            <%= f.hidden_field :comments, value: activity["description"] %>
+            <%= f.submit "Upload Activity", class: "btn btn-theme" %>
+          <% end %>
+        </span>
+      </li>
+    <% end %>
+  </ol>
+<% else %>
+  <p>You have no recent activities on Strava.</p>
+<% end %>
