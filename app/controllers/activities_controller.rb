@@ -15,7 +15,7 @@ class ActivitiesController < ApplicationController
   def upload
     @new_activity = current_user.activities.build
     @activities = current_user.strava_client.list_athlete_activities(
-      after: FUNDRAISING_START_DATE
+      before: FUNDRAISING_START_DATE
     ).select do |activity| # Filter activities
       !activity["manual"] &&
       Activity.sports.include?(activity["type"].downcase) &&

@@ -6,16 +6,20 @@
   <ol class="activities strava-activities">
     <% @activities.each do |activity| %>
       <li id="activity-<%= activity["id"] %>">
-        <span class="title">
-          <%= activity["name"] %>
-        </span>
-        <span class="date">
-          <%= activity["start_date"].to_datetime.strftime("%B %d, %Y") %>
-        </span>
-        <span class="data">
-          <%= distance_formatted_for(activity["distance"], current_user) %>
-        </span>
-        <span class="upload">
+        <div class="row">
+          <div class="col-sm-9">
+          <span class="title">
+            <%= link_to activity["name"], strava_activity_url(activity["id"]),
+                        target: "_blank" %>
+          </span>
+          <span class="date">
+            <%= activity["start_date"].to_datetime.strftime("%B %d, %Y") %>
+          </span>
+          <span class="data">
+            <%= distance_formatted_for(activity["distance"], current_user) %>
+          </span>
+        </div>
+        <div class="col-sm-3">
           <%= form_for(@new_activity) do |f| %>
             <%= f.hidden_field :strava_activity_id, value: activity["id"] %>
             <%= f.hidden_field :title, value: activity["name"] %>
@@ -27,7 +31,7 @@
             <%= f.hidden_field :comments, value: activity["description"] %>
             <%= f.submit "Upload Activity", class: "btn btn-theme" %>
           <% end %>
-        </span>
+        </div>
       </li>
     <% end %>
   </ol>

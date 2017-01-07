@@ -21,6 +21,10 @@ module ActivitiesHelper
     converted_gain.round(0)
   end
 
+  def start_date_formatted(start_date)
+    start_date.strftime("%B %d, %Y")
+  end
+
   def moving_time_formatted(moving_time)
     formatted_time(moving_time)
   end

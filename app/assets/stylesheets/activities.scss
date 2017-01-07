@@ -8,18 +8,24 @@
     padding: 10px 0;
     border-top: 1px solid $gray-medium-light;
 
-    .title a {
-      color: black;
-      font-weight: bold;
+    .title {
       display: block;
       margin-left: 60px;
+      font-weight: bold;
+
+      a {
+        color: black;
+      }
     }
 
-    .user a {
-      color: black;
-      display: block;
+    .user {
       margin-left: 60px;
       padding-top: 0;
+      display: block;
+
+      a {
+        color: black;
+      }
     }
 
     .date {
@@ -45,3 +51,11 @@
   }
 }
 
+.strava-activities {
+  li {
+    .btn {
+      width: 100%;
+      float: right;
+    }
+  }
+}
