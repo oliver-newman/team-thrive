@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  before_action :confirm_user_logged_in, only: [:feed]
+  before_action :confirm_user_logged_in, only: [:feed, :dashboard]
 
   def welcome
     # TODO: instead, confirm that user is NOT logged in
@@ -12,6 +12,7 @@ class StaticPagesController < ApplicationController
   end
 
   def dashboard
+    @progress = current_user.percent_progress
   end
 
   def feed

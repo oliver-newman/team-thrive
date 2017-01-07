@@ -108,6 +108,26 @@ class User < ApplicationRecord
     end
   end
 
+  # Calculate the total dollars this user has raised, based on the dollar/km
+  # equivalencies for each sport.
+  def dollars_raised
+    dollars_raised_per_sport = {}
+    Activity.sports.each do |sport, _|
+      total_meters_for_sport = activities.where(sport: sport).sum(:distance)
+      dollars_raised_per_sport[sport] =
+        Activity::DOLLARS_PER_KM[sport.to_sym] * total_meters_for_sport / 1000.0
+    end
+    dollars_raised_per_sport.values.sum
+  end
+
+  def percent_progress
+    if fundraising_goal
+      dollars_raised / fundraising_goal * 100.0
+    else
+      0.0
+    end
+  end
+
   private
 
   # Converts email to all lower-case.

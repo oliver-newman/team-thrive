@@ -1,7 +1,16 @@
 <% provide(:title, "Dashboard") %>
 
 <h1>Dashboard</h1>
-  <%= link_to "Sync with Strava", upload_path,
-              class: "btn btn-large btn-theme" %>
-<p>
-</p>
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="<%= @progress %>"
+       aria-valuemin="0" aria-valuemax="100" style="width:<%= @progress %>%">
+  </div>
+</div>
+<center>
+  <%= @progress.to_i %>% of goal complete
+</center>
+
+
+<%= link_to "Sync with Strava", upload_path,
+            class: "btn btn-large btn-theme" %>
