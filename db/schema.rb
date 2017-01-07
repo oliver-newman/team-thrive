@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170107030130) do
+ActiveRecord::Schema.define(version: 20170107173802) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "start_date"
@@ -43,14 +43,15 @@ ActiveRecord::Schema.define(version: 20170107030130) do
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.integer  "strava_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "remember_digest"
-    t.boolean  "admin",           default: false
-    t.integer  "unit_preference", default: 0
+    t.boolean  "admin",            default: false
+    t.integer  "unit_preference",  default: 0
     t.string   "strava_token"
+    t.float    "fundraising_goal"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["strava_id"], name: "index_users_on_strava_id", unique: true
   end
