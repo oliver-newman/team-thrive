@@ -66,6 +66,8 @@ module ApplicationHelper
       passive ? "run" : "ran"
     when "ride"
       passive ? "ridden" : "rode"
+    when "walk"
+      "walked"
     end
   end
 

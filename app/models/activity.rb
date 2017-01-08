@@ -2,11 +2,11 @@ class Activity < ApplicationRecord
   default_scope -> { order(start_date: :desc) }
 
   FUNDRAISING_START_DATE = DateTime.new(2016, 1, 1, 0, 0, 0)
-  DOLLARS_PER_KM = { 'run': 0.1, 'ride': 0.02 }
+  DOLLARS_PER_KM = { run: 0.1, ride: 0.02, walk: 0.1}
   DOLLARS_PER_MEAL = 3.00
   OVERALL_GOAL_DOLLARS = 10000.0
 
-  enum sport: { run: 0, ride: 1 }
+  enum sport: { run: 0, ride: 1, walk: 2 }
 
   belongs_to :user
 

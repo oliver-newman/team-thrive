@@ -10,6 +10,10 @@ class ActivityTest < ActiveSupport::TestCase
                                        strava_activity_id: 812034044)
   end
 
+  test "run and walk should have the same fundraising equivalency" do
+    assert_equal Activity::DOLLARS_PER_KM[:run], Activity::DOLLARS_PER_KM[:walk]
+  end
+
   test "should be valid" do
     assert @activity.valid?
   end

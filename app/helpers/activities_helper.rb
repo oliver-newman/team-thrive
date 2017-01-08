@@ -9,5 +9,4 @@ module ActivitiesHelper
       "&path=weight:3%color:orange%7:Cenc:#{CGI.escape(polyline.to_s)}" +
       "&key=#{Rails.application.secrets.GOOGLE_MAPS_KEY}"
   end
-
 end
