@@ -94,6 +94,38 @@ class User < ApplicationRecord
     @strava_client ||= Strava::Api::V3::Client.new(access_token: strava_token)
   end
 
+  # Calculate the total dollars this user has raised, based on the dollar/km
+  # equivalencies for each sport.
+  def dollars_raised(earliest = Activity::FUNDRAISING_START_DATE,
+                     latest = Time.zone.now)
+    activities.select { |a|
+      a.start_date > earliest && a.start_date < latest
+    }.sum(&:dollars_raised)
+  end
+
+  def percent_progress
+    if fundraising_goal
+      dollars_raised / fundraising_goal * 100.0
+    else
+      0.0
+    end
+  end
+
+  def distance(sport, earliest = Activity::FUNDRAISING_START_DATE,
+               latest = Time.zone.now)
+    activities.select { |a|
+      a.sport == sport && a.start_date > earliest && a.start_date < latest
+    }.sum(&:distance)
+  end
+
+  def weekly_distance(sport, week_start = 7.days.ago)
+    distance(sport, week_start, week_start + 7.days)
+  end
+
+  def weekly_fundraising(week_start = 7.days.ago)
+    dollars_raised(week_start, week_start + 7.days)
+  end
+
   class << self
     # Returns hash digest of the given string.
     def digest(string)
@@ -105,26 +137,6 @@ class User < ApplicationRecord
     # Returns a random token.
     def new_token
       SecureRandom.urlsafe_base64
-    end
-  end
-
-  # Calculate the total dollars this user has raised, based on the dollar/km
-  # equivalencies for each sport.
-  def dollars_raised
-    dollars_raised_per_sport = {}
-    Activity.sports.each do |sport, _|
-      total_meters_for_sport = activities.where(sport: sport).sum(:distance)
-      dollars_raised_per_sport[sport] =
-        Activity::DOLLARS_PER_KM[sport.to_sym] * total_meters_for_sport / 1000.0
-    end
-    dollars_raised_per_sport.values.sum
-  end
-
-  def percent_progress
-    if fundraising_goal
-      dollars_raised / fundraising_goal * 100.0
-    else
-      0.0
     end
   end
 

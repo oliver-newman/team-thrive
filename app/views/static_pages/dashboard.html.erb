@@ -5,16 +5,31 @@
 
 <div class="row">
   <div class="col-md-8">
+    <h3>My Week</h3>
+
+    <% Activity.sports.each do |sport, _| %>
+      <p>
+        <span class="stat-label">Distance <%= past_tensify(sport) %>:</span>
+        <%= distance_formatted_for(@user.weekly_distance(sport),
+                                   current_user) %>
+      </p>
+    <% end %>
+    <p>
+      <span class="stat-label">Money Raised:</span>
+      <%= dollarify(@user.weekly_fundraising) %>
+    </p>
+
     <h3>My Impact</h3>
 
     <div class="progress">
       <div class="progress-bar" role="progressbar"
-          aria-valuenow="<%= @user_progress %>" aria-valuemin="0"
-          aria-valuemax="100" style="width:<%= @user_progress %>%">
+           aria-valuenow="<%= @user.percent_progress %>"
+           aria-valuemin="0" aria-valuemax="100"
+           style="width:<%= @user.percent_progress %>%">
       </div>
     </div>
     <center>
-      <%= current_user.percent_progress.to_i %>% of goal complete
+      <%= @user.percent_progress.to_i %>% of goal complete
     </center>
   </div>
 
@@ -29,14 +44,14 @@
         <p><%= Activity.count %> activities uploaded</p>
         <% Activity.sports.each do |sport, _| %>
           <p>
-            <span class="stat-label">Total <%= sport %> distance:</span>
+            <span class="stat-label">Distance <%= past_tensify(sport) %>:</span>
             <%= distance_formatted_for(Activity.total_sport_distance(sport),
                                       current_user) %>
           </p>
         <% end %>
         <p>
           <span class="stat-label">Total fundraising:</span>
-          $<%= "#{'%.2f' % Activity.total_dollars_raised}" %>
+          <%= dollarify(Activity.total_dollars_raised) %>
         </p>
         <p>
           <span class="stat-label">Total meals funded:</span>

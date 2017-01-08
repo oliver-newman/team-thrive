@@ -1,6 +1,4 @@
 class ActivitiesController < ApplicationController
-  FUNDRAISING_START_DATE = DateTime.new(2016, 9, 1, 0, 0, 0)
-
   before_action :confirm_user_logged_in, only: [:show, :new, :create, :destroy]
   before_action :confirm_correct_user, only: [:destroy]
 
@@ -15,7 +13,7 @@ class ActivitiesController < ApplicationController
   def upload
     @new_activity = current_user.activities.build
     @activities = current_user.strava_client.list_athlete_activities(
-      before: FUNDRAISING_START_DATE
+      after: Activity::FUNDRAISING_START_DATE
     ).select do |activity| # Filter activities
       !activity["manual"] &&
       Activity.sports.include?(activity["type"].downcase) &&
