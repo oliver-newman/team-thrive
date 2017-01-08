@@ -10,12 +10,4 @@ class StaticPagesController < ApplicationController
 
   def about
   end
-
-  def dashboard
-    @user = current_user
-  end
-
-  def feed
-    @feed_items = current_user.feed.paginate(page: params[:page])
-  end
 end

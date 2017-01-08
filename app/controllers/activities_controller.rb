@@ -39,6 +39,14 @@ class ActivitiesController < ApplicationController
     redirect_to user
   end
 
+  def dashboard
+    @user = current_user
+  end
+
+  def feed
+    @feed_items = current_user.feed.paginate(page: params[:page])
+  end
+
   private
 
   def activity_params

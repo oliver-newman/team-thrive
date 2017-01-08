@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   get '/help',          to: 'static_pages#help'
   get '/about',         to: 'static_pages#about'
-  get '/feed',          to: 'static_pages#feed'
-  get '/dashboard',     to: 'static_pages#dashboard'
+  get '/feed',          to: 'activities#feed'
+  get '/dashboard',     to: 'activities#dashboard'
   get '/strava_auth',   to: 'sessions#create'
   get '/upload',        to: 'activities#upload'
   post '/login',        to: 'sessions#new'
