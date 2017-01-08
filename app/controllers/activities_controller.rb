@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
-  before_action :confirm_user_logged_in, only: [:show, :new, :create, :destroy]
+  before_action :confirm_user_logged_in, only: [:show, :new, :create, :destroy,
+                                                :dashboard, :new]
   before_action :confirm_correct_user, only: [:destroy]
 
   def show
@@ -7,10 +8,6 @@ class ActivitiesController < ApplicationController
   end
 
   def new
-    @activity = current_user.activities.build
-  end
-
-  def upload
     @new_activity = current_user.activities.build
     @activities = current_user.strava_client.list_athlete_activities(
       after: Activity::FUNDRAISING_START_DATE
@@ -28,7 +25,7 @@ class ActivitiesController < ApplicationController
     @activity = current_user.activities.build(activity_params)
     if @activity.save
       flash[:success] = "New activity uploaded!"
-      redirect_to upload_path
+      redirect_to 'new'
     end
   end
 
