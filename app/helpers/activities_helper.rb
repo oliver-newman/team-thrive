@@ -4,6 +4,11 @@ module ActivitiesHelper
     "https://www.strava.com/activities/#{activity_id}"
   end
 
+  # Returns an image tag for an icon representing either a sport or a meal
+  def icon_for(subject)
+    image_tag("#{subject}.png", alt: subject, class: "icon #{subject}-icon")
+  end
+
   def map_url(polyline, size)
     "https://maps.googleapis.com/maps/api/staticmap?size=#{size}x#{size}" +
       "&path=weight:3%color:orange%7:Cenc:#{CGI.escape(polyline.to_s)}" +

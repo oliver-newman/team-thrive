@@ -25,6 +25,16 @@ textarea {
   max-width: 1000px;
 }
 
+.row-centered {
+  text-align: center;
+}
+
+.col-centered {
+  display: inline-block;
+  float: none;
+  margin-right: -4px;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {

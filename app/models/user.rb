@@ -126,6 +126,10 @@ class User < ApplicationRecord
     dollars_raised(week_start, week_start + 7.days)
   end
 
+  def weekly_meals_funded(week_start = 7.days.ago)
+    weekly_fundraising(week_start) / Activity::DOLLARS_PER_MEAL
+  end
+
   class << self
     # Returns hash digest of the given string.
     def digest(string)

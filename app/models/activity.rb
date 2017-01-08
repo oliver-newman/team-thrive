@@ -6,7 +6,7 @@ class Activity < ApplicationRecord
   DOLLARS_PER_MEAL = 3.00
   OVERALL_GOAL_DOLLARS = 10000.0
 
-  enum sport: { run: 0, ride: 1, walk: 2 }
+  enum sport: { walk: 2, run: 0, ride: 1 }
 
   belongs_to :user
 
@@ -24,6 +24,10 @@ class Activity < ApplicationRecord
 
   def dollars_raised
     distance * DOLLARS_PER_KM[sport.to_sym] / 1000.0
+  end
+
+  def meals_funded
+    dollars_raised / DOLLARS_PER_MEAL
   end
 
   class << self

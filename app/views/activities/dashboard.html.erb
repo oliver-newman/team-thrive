@@ -7,17 +7,25 @@
   <div class="col-md-8">
     <h3>My Week</h3>
 
-    <% Activity.sports.each do |sport, _| %>
-      <p>
-        <span class="stat-label">Distance <%= past_tensify(sport) %>:</span>
-        <%= distance_formatted_for(@user.weekly_distance(sport),
-                                   current_user) %>
-      </p>
-    <% end %>
-    <p>
-      <span class="stat-label">Money Raised:</span>
-      <%= dollarify(@user.weekly_fundraising) %>
-    </p>
+    <div class="row row-centered">
+      <% Activity.sports.each do |sport, _| %>
+        <% if @user.weekly_distance(sport).positive? %>
+          <div class="col-xs-3 col-centered">
+            <%= icon_for(sport) %>
+            <p>
+              <%= distance_formatted_for(@user.weekly_distance(sport),
+                                         current_user) %>
+            </p>
+          </div>
+        <% end %>
+      <% end %>
+      <div class="col-xs-3 col-centered">
+        <%= icon_for("meal") %>
+        <p>
+          <%= @user.weekly_meals_funded.round(1) %> meals funded
+        </p>
+      </div>
+    </div>
 
     <h3>My Impact</h3>
 
