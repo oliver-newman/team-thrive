@@ -9,7 +9,7 @@ class ActivitiesController < ApplicationController
 
   def new
     @new_activity = current_user.activities.build
-    @activities = current_user.strava_client.list_athlete_activities(
+    @strava_activities = current_user.strava_client.list_athlete_activities(
       after: Activity::FUNDRAISING_START_DATE
     ).select do |activity| # Filter activities
       !activity["manual"] &&
@@ -25,7 +25,7 @@ class ActivitiesController < ApplicationController
     @activity = current_user.activities.build(activity_params)
     if @activity.save
       flash[:success] = "New activity uploaded!"
-      redirect_to 'new'
+      redirect_to new_activity_path
     end
   end
 

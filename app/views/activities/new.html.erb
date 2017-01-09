@@ -2,12 +2,15 @@
 
 <h1>Activity Upload</h1>
 
-<% if @activities.any? %>
+<% if @strava_activities.any? %>
   <ol class="activities strava-activities">
-    <% @activities.each do |activity| %>
+    <% @strava_activities.each do |activity| %>
       <li id="activity-<%= activity["id"] %>">
         <div class="row">
           <div class="col-sm-9">
+          <span class="map">
+            <%= polyline_image(activity["map"]["summary_polyline"], 200) %>
+          </span>
           <span class="title">
             <%= link_to activity["name"], strava_activity_url(activity["id"]),
                         target: "_blank" %>

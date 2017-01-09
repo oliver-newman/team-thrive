@@ -9,9 +9,13 @@ module ActivitiesHelper
     image_tag("#{subject}.png", alt: subject, class: "icon #{subject}-icon")
   end
 
-  def map_url(polyline, size)
-    "https://maps.googleapis.com/maps/api/staticmap?size=#{size}x#{size}" +
-      "&path=weight:3%color:orange%7:Cenc:#{CGI.escape(polyline.to_s)}" +
-      "&key=#{Rails.application.secrets.GOOGLE_MAPS_KEY}"
+  def polyline_image(polyline, size)
+    polyline = CGI::escape(polyline.to_s) # CGI::escape(polyline.to_s)
+    p polyline
+    image_tag("https://maps.googleapis.com/maps/api/staticmap?" +
+                "size=#{size}x#{size}" +
+                "&path=weight:3%color:orange%7:Cenc:#{polyline}" +
+                "&key=#{Rails.application.secrets.GOOGLE_MAPS_KEY}",
+              alt: "Activity map")
   end
 end

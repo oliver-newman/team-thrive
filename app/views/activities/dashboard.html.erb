@@ -1,6 +1,6 @@
 <% provide(:title, "Dashboard") %>
 
-<%= link_to "Sync with Strava", upload_path,
+<%= link_to "Sync with Strava", new_activity_path,
             class: "btn btn-theme btn-block" %>
 
 <div class="row">
@@ -9,21 +9,25 @@
 
     <div class="row row-centered">
       <% Activity.sports.each do |sport, _| %>
-        <% if sport != "walk" || @user.weekly_distance(sport).positive? %>
+        <% if @user.weekly_distance(sport).positive? %>
           <div class="col-xs-6 col-centered">
-            <%= icon_for(sport) %>
-            <span>
-              <%= distance_formatted_for(@user.weekly_distance(sport),
-                                         current_user) %>
-            </span>
+            <div class="icon-container">
+              <%= icon_for(sport) %>
+              <span class="icon-label">
+                <%= distance_formatted_for(@user.weekly_distance(sport),
+                                          current_user) %>
+              </span>
+            </div>
           </div>
         <% end %>
       <% end %>
-      <div class="col-xs-6 col-centered">
-        <%= icon_for("meal") %>
-        <span>
-          <%= @user.weekly_meals_funded.round(1) %> meals funded
-        </span>
+      <div class="icon-container">
+        <div class="col-xs-6 col-centered">
+          <%= icon_for("meal") %>
+          <span class="icon-label">
+            <%= @user.weekly_meals_funded.round(1) %> meals funded
+          </span>
+        </div>
       </div>
     </div>
 
@@ -64,6 +68,18 @@
         <p>
           <span class="stat-label">Total meals funded:</span>
           <%= Activity.total_meals_funded.round(1) %>
+          <%= pie_chart(
+                {
+                  raised: Activity.sum(&:dollars_raised),
+                  to_go: Activity::OVERALL_GOAL_DOLLARS -
+                  Activity.sum(&:dollars_raised)
+                },
+                donut: true,
+                colors: ["#2CC14F", "#EAEAEA"],
+                tooltips: { enabled: false }, # Not working
+                legend: false
+              ) 
+          %>
         </p>
       </div>
     </div>
