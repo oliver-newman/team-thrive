@@ -8,9 +8,11 @@
       <li id="activity-<%= activity["id"] %>">
         <div class="row">
           <div class="col-sm-9">
-          <span class="map">
-            <%= polyline_image(activity["map"]["summary_polyline"], 200) %>
-          </span>
+          <% if activity["map"]["summary_polyline"] %>
+            <span class="map">
+              <%= polyline_image(activity["map"]["summary_polyline"], 150) %>
+            </span>
+          <% end %>
           <span class="title">
             <%= link_to activity["name"], strava_activity_url(activity["id"]),
                         target: "_blank" %>
@@ -18,7 +20,7 @@
           <span class="date">
             <%= activity["start_date"].to_datetime.strftime("%B %d, %Y") %>
           </span>
-          <span class="data">
+          <span class="distance">
             <%= distance_formatted_for(activity["distance"], current_user) %>
           </span>
         </div>
@@ -31,6 +33,7 @@
             <%= f.hidden_field :distance, value: activity["distance"] %>
             <%= f.hidden_field :elevation_gain, value: activity["total_elevation_gain"] %>
             <%= f.hidden_field :moving_time, value: activity["moving_time"] %>
+            <%= f.hidden_field :summary_polyline, value: activity["map"]["summary_polyline"] %>
             <%= f.hidden_field :comments, value: activity["description"] %>
             <%= f.submit "Upload Activity", class: "btn btn-theme" %>
           <% end %>
