@@ -18,23 +18,23 @@ class UsersController < ApplicationController
     @show_follow = false
   end
 
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      log_in @user
-      flash[:success] = "Welcome to TeamThrive!"
-      redirect_to root_url
-    else
-      render 'new'
-    end
-  end
-
   def edit
     @user = User.find(params[:id])
   end
 
   def update
     @user = User.find(params[:id])
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
+    p user_params.class
     if @user.update_attributes(user_params)
       flash[:success] = "Successfully updated profile."
       redirect_to @user

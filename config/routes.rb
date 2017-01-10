@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   match '/404',       to: 'errors#not_found', via: :all
   match '/500',       to: 'errors#internal_server_error', via: :all
 
-  resources :users do
+  resources :users, only: [:index, :show, :edit, :update, :destroy] do
     member do # member associates user id with url (e.g., users/1/following)
       get :following, :followers
     end
