@@ -11,18 +11,19 @@ module Fundraising
   def distance_travelled_by(user, sport = nil,
                             earliest = FUNDRAISING_START_DATE,
                             latest = FUNDRAISING_END_DATE)
-    user.activities.select { |activity|
-      (activity.sport == sport || sport.nil?) &&
-        activity.start_date > earliest && activity.start_date < latest
-    }.sum(&:distance)
+    # This ugly beast is required because sport is an enum and thus does not
+    # cooperated when interpolated into raw SQL queries.
+    user.activities.where(sport: sport).where(
+      "start_date > ? AND start_date < ?", earliest, latest
+    ).sum(&:distance)
   end
 
   # Dollars raised by a single user (default: within the fundraising period).
   def dollars_raised_by(user, earliest = FUNDRAISING_START_DATE,
                         latest = FUNDRAISING_END_DATE)
-    user.activities.select { |activity|
-      activity.start_date > earliest && activity.start_date < latest
-    }.sum { |activity| dollar_equivalency_for(activity) }
+    user.activities.where(
+      "start_date > ? AND start_date < ?", earliest, latest
+    ).sum { |activity| dollar_equivalency_for(activity) }
   end
 
   # Meals funded by a single user (default: within the fundraising period).
@@ -33,8 +34,8 @@ module Fundraising
 
   # Percentage of a user's fundraising goal that has been achieved.
   def percent_of_goal_raised_by(user)
-    if user.fundraising_goal
-      dollars_raised_by(user) / user.fundraising_goal
+    if user.fundraising_goal.positive?
+      dollars_raised_by(user) / user.fundraising_goal * 100.0
     else
       0.0
     end
