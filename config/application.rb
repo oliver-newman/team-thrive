@@ -19,5 +19,8 @@ module TeamThrive
 
     # Include the authenticity token in remote forms
     config.action_view.embed_authenticity_token_in_remote_forms = true
+
+    # Auto-include lib files
+    config.autoload_paths << File.join(Rails.root, 'lib')
   end
 end

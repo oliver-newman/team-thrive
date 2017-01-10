@@ -8,7 +8,7 @@
       <li id="activity-<%= activity["id"] %>">
         <div class="row">
           <div class="col-sm-9">
-          <% if activity["map"]["summary_polyline"] %>
+          <% unless activity["map"]["summary_polyline"].blank? %>
             <span class="map">
               <%= polyline_image(activity["map"]["summary_polyline"], 150) %>
             </span>

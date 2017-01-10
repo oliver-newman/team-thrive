@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170107173802) do
+ActiveRecord::Schema.define(version: 20170109013303) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "start_date"
@@ -21,10 +21,18 @@ ActiveRecord::Schema.define(version: 20170107173802) do
     t.text     "comments"
     t.integer  "strava_activity_id"
     t.integer  "user_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.text     "summary_polyline"
     t.integer  "sport"
+    t.string   "small_map_file_name"
+    t.string   "small_map_content_type"
+    t.integer  "small_map_file_size"
+    t.datetime "small_map_updated_at"
+    t.string   "large_map_file_name"
+    t.string   "large_map_content_type"
+    t.integer  "large_map_file_size"
+    t.datetime "large_map_updated_at"
     t.index ["strava_activity_id"], name: "index_activities_on_strava_activity_id", unique: true
     t.index ["user_id", "start_date"], name: "index_activities_on_user_id_and_start_date"
     t.index ["user_id"], name: "index_activities_on_user_id"

@@ -94,42 +94,6 @@ class User < ApplicationRecord
     @strava_client ||= Strava::Api::V3::Client.new(access_token: strava_token)
   end
 
-  # Calculate the total dollars this user has raised, based on the dollar/km
-  # equivalencies for each sport.
-  def dollars_raised(earliest = Activity::FUNDRAISING_START_DATE,
-                     latest = Time.zone.now)
-    activities.select { |a|
-      a.start_date > earliest && a.start_date < latest
-    }.sum(&:dollars_raised)
-  end
-
-  def percent_progress
-    if fundraising_goal
-      dollars_raised / fundraising_goal * 100.0
-    else
-      0.0
-    end
-  end
-
-  def distance(sport, earliest = Activity::FUNDRAISING_START_DATE,
-               latest = Time.zone.now)
-    activities.select { |a|
-      a.sport == sport && a.start_date > earliest && a.start_date < latest
-    }.sum(&:distance)
-  end
-
-  def weekly_distance(sport, week_start = 7.days.ago)
-    distance(sport, week_start, week_start + 7.days)
-  end
-
-  def weekly_fundraising(week_start = 7.days.ago)
-    dollars_raised(week_start, week_start + 7.days)
-  end
-
-  def weekly_meals_funded(week_start = 7.days.ago)
-    weekly_fundraising(week_start) / Activity::DOLLARS_PER_MEAL
-  end
-
   class << self
     # Returns hash digest of the given string.
     def digest(string)

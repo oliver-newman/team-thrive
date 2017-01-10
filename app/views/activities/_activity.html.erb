@@ -1,7 +1,7 @@
 <li id="activity-<%= activity.id %>">
-  <% if activity.summary_polyline %>
+  <% if activity.small_map.present? %>
     <span class="map">
-      <%= link_to polyline_image(activity.summary_polyline, 150), activity %>
+      <%= link_to image_tag(activity.small_map.url), activity %>
     </span>
   <% end %>
   <%= link_to gravatar_for(activity.user, size: 50), activity.user %>
