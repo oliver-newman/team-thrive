@@ -8,12 +8,13 @@ module FundraisingHelper
   # User instance methods
 
   # Distance (in meters) 
-  def sport_distance_by(user, sport, start = FUNDRAISING_START_DATE,
-                        latest = FUNDRAISING_END_DATE)
-    activities.select { |activity|
-      activity.sport == sport && activity.start_date > earliest &&
-        activity.start_date < latest
-    }.sum(:distance)
+  def distance_travelled_by(user, sport = nil,
+                            earliest = FUNDRAISING_START_DATE,
+                            latest = FUNDRAISING_END_DATE)
+    user.activities.select { |activity|
+      (activity.sport == sport || sport.nil?) &&
+        activity.start_date > earliest && activity.start_date < latest
+    }.sum(&:distance)
   end
 
   # Dollars raised by a single user (default: within the fundraising period).
@@ -26,7 +27,7 @@ module FundraisingHelper
 
   # Meals funded by a single user (default: within the fundraising period).
   def meals_funded_by(user, earliest = FUNDRAISING_START_DATE,
-                      lastest = FUNDRAISING_END_DATE)
+                      latest = FUNDRAISING_END_DATE)
     dollars_raised_by(user, earliest, latest) / DOLLARS_PER_MEAL
   end
 
@@ -61,11 +62,17 @@ module FundraisingHelper
     ).sum(:distance)
   end
 
-  # Overall dollars raised.
+  # Total dollars raised by all users.
   def dollars_raised_overall(earliest = FUNDRAISING_START_DATE,
                              latest = FUNDRAISING_END_DATE)
     Activity.where(
       "start_date > ? AND start_date < ?", earliest, latest
-    ).map { |activity| dollar_equivalency_for(activity) }
+    ).sum { |activity| dollar_equivalency_for(activity) }
+  end
+
+  # Total meals funded by all users.
+  def meals_funded_overall(earliest = FUNDRAISING_START_DATE,
+                           latest = FUNDRAISING_END_DATE)
+    dollars_raised_overall(earliest, latest) / DOLLARS_PER_MEAL
   end
 end

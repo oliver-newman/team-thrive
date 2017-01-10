@@ -74,7 +74,9 @@ module ApplicationHelper
     end
   end
 
+  # Formats a float representing a dollar amount.
+  # Example: dollarify(43.34513) => "$43.35"
   def dollarify(amount)
-    "$%.2f" % amount
+    "$%.2f" % amount.round(2)
   end
 end

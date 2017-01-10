@@ -9,13 +9,15 @@
 
     <div class="row row-centered">
       <% Activity.sports.each do |sport, _| %>
-        <% if @user.weekly_distance(sport).positive? %>
+        <% if distance_travelled_by(@user, sport, 7.days.ago).positive? %>
           <div class="col-xs-6 col-centered">
             <div class="icon-container">
               <%= icon_for(sport) %>
               <span class="icon-label">
-                <%= distance_formatted_for(@user.weekly_distance(sport),
-                                          current_user) %>
+                <%= distance_formatted_for(
+                      distance_travelled_by(@user, sport, 7.days.ago),
+                      current_user
+                    ) %>
               </span>
             </div>
           </div>
@@ -25,7 +27,7 @@
         <div class="col-xs-6 col-centered">
           <%= icon_for("meal") %>
           <span class="icon-label">
-            <%= @user.weekly_meals_funded.round(1) %> meals funded
+            <%= meals_funded_by(@user, 7.days.ago).round(1) %> meals funded
           </span>
         </div>
       </div>
@@ -35,13 +37,13 @@
 
     <div class="progress active">
       <div class="progress-bar" role="progressbar"
-           aria-valuenow="<%= @user.percent_progress %>"
+           aria-valuenow="<%= percent_of_goal_raised_by(@user) %>"
            aria-valuemin="0" aria-valuemax="100"
-           style="width:<%= @user.percent_progress %>%">
+           style="width:<%= percent_of_goal_raised_by(@user) %>%">
       </div>
     </div>
     <center>
-      <%= @user.percent_progress.to_i %>% of goal complete
+      <%= percent_of_goal_raised_by(@user).to_i %>% of goal complete
     </center>
   </div>
 
@@ -57,22 +59,22 @@
         <% Activity.sports.each do |sport, _| %>
           <p>
             <span class="stat-label">Distance <%= past_tensify(sport) %>:</span>
-            <%= distance_formatted_for(Activity.total_sport_distance(sport),
-                                      current_user) %>
+            <%= distance_formatted_for(sport_distance_overall(sport),
+                                       current_user) %>
           </p>
         <% end %>
         <p>
           <span class="stat-label">Total fundraising:</span>
-          <%= dollarify(Activity.total_dollars_raised) %>
+          <%= dollarify(dollars_raised_overall) %>
         </p>
         <p>
           <span class="stat-label">Total meals funded:</span>
-          <%= Activity.total_meals_funded.round(1) %>
+          <%= meals_funded_overall.round(1) %>
           <%= pie_chart(
                 {
-                  raised: Activity.sum(&:dollars_raised),
-                  to_go: Activity::OVERALL_GOAL_DOLLARS -
-                  Activity.sum(&:dollars_raised)
+                  raised: dollars_raised_overall,
+                  to_go: FundraisingHelper::OVERALL_GOAL_DOLLARS -
+                         dollars_raised_overall
                 },
                 donut: true,
                 colors: ["#2CC14F", "#EAEAEA"],

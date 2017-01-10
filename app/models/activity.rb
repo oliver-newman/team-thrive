@@ -25,28 +25,4 @@ class Activity < ApplicationRecord
   validates_attachment :large_map, content_type: {
                                      content_type: /\Aimage\/.*\z/
                                    }
-
-  class << self
-    def total_sport_distance(sport, earliest = FUNDRAISING_START_DATE,
-                             latest = Time.zone.now)
-      select { |a|
-        a.sport == sport && a.start_date > earliest && a.start_date < latest
-      }.sum(&:distance)
-    end
-
-    def total_dollars_raised(earliest = FUNDRAISING_START_DATE,
-                             latest = Time.zone.now)
-      select { |a|
-        a.start_date > earliest && a.start_date < latest
-      }.sum(&:dollars_raised)
-    end
-
-    def total_meals_funded
-      total_dollars_raised / DOLLARS_PER_MEAL
-    end
-
-    def total_percent_progress
-      total_dollars_raised / OVERALL_FUNDRAISING_GOAL
-    end
-  end
 end
