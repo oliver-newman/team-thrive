@@ -1,6 +1,6 @@
 # Functions related to polyline maps.
 
-module MapsHelper
+module PolylineMapsHelper
   # Returns the URL for the Google Maps static map image showing an activity
   # polyline.
   def polyline_map_url(polyline, size, color)

@@ -1,6 +1,6 @@
 module ApplicationHelper
-  include MapsHelper
-  include FundraisingHelper
+  include PolylineMapsHelper
+  include Fundraising
 
   # Returns the full title on a per-page basis.
   def full_title(page_title = '')

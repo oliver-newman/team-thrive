@@ -1,6 +1,6 @@
-module FundraisingHelper
-  FUNDRAISING_START_DATE = DateTime.new(2016, 1, 1, 0, 0, 0)
-  FUNDRAISING_END_DATE = DateTime.new(2016, 1, 1, 0, 0, 0)
+module Fundraising
+  FUNDRAISING_START_DATE = DateTime.new(2017, 1, 1, 0, 0, 0)
+  FUNDRAISING_END_DATE = DateTime.new(2018, 1, 1, 0, 0, 0)
   DOLLARS_PER_KM = { run: 0.1, ride: 0.02, walk: 0.1}
   DOLLARS_PER_MEAL = 3.00
   OVERALL_GOAL_DOLLARS = 10000.0
