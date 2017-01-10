@@ -7,13 +7,14 @@ module Fundraising
 
   # User instance methods
 
-  # Distance (in meters) 
+  # Distance (in meters) traveled by a user (optionally, 
   def distance_travelled_by(user, sport = nil,
                             earliest = FUNDRAISING_START_DATE,
                             latest = FUNDRAISING_END_DATE)
-    # This ugly beast is required because sport is an enum and thus does not
-    # cooperated when interpolated into raw SQL queries.
-    user.activities.where(sport: sport).where(
+    # This ugliness is required because underlying sport column is an enum and
+    # thus sport strings do not cooperate when interpolated into raw SQL
+    # queries. And to allow for nil sport.
+    (sport.nil? ? user.activities : user.activities.where(sport: sport)).where(
       "start_date > ? AND start_date < ?", earliest, latest
     ).sum(&:distance)
   end

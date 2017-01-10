@@ -24,6 +24,7 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :unit_preference, presence: true
+  validates :fundraising_goal, presence: true, numericality: { greater_than: 0 }
 
   before_save :downcase_email
 

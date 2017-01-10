@@ -73,7 +73,8 @@ class UsersController < ApplicationController
                                  :email,
                                  :strava_token,
                                  :strava_id,
-                                 :unit_preference)
+                                 :unit_preference,
+                                 :fundraising_goal)
   end
 
   # before_action filters
