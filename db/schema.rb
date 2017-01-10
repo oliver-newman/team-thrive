@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109013303) do
+ActiveRecord::Schema.define(version: 20170110043230) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "start_date"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20170109013303) do
     t.boolean  "admin",            default: false
     t.integer  "unit_preference",  default: 0
     t.string   "strava_token"
-    t.float    "fundraising_goal"
+    t.float    "fundraising_goal", default: 100.0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["strava_id"], name: "index_users_on_strava_id", unique: true
   end
