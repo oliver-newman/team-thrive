@@ -59,7 +59,7 @@ module Fundraising
   # Distance traveled over the course of activities of a specific sport.
   def sport_distance_overall(sport, earliest = FUNDRAISING_START_DATE,
                              latest = FUNDRAISING_END_DATE)
-    Activity.where(
+    Activity.where(sport: sport).where(
       "start_date > ? AND start_date < ?", earliest, latest
     ).sum(:distance)
   end
