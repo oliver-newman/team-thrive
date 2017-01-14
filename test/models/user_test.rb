@@ -5,8 +5,10 @@ class UserTest < ActiveSupport::TestCase
     @user = User.new(first_name: "Test",
                      last_name: "User",
                      email: "user@example.com",
-                     # TODO: Strava stuff
-                    )
+                     strava_token: Faker::Crypto.sha1,
+                     strava_id: 135513,
+                     unit_preference: "feet",
+                     fundraising_goal: 700)
   end
 
   test "full name should be correctly formatted" do
@@ -110,10 +112,14 @@ class UserTest < ActiveSupport::TestCase
 
   test "associated activities should be destroyed" do
     @user.save
-    @user.activities.create!(title: "Morning ride",
+    @user.activities.create!(strava_activity_id: 15123412,
                              sport: "run",
+                             start_date: 1.year.ago,
+                             title: "Morning run",
                              distance: 5000,
-                             start_date: 1.year.ago)
+                             elevation_gain: 500,
+                             moving_time: 6000,
+                             comments: "Ran this morning.")
     assert_difference "Activity.count", -1 do
       @user.destroy
     end

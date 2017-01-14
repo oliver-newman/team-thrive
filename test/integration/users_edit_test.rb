@@ -10,10 +10,10 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     get edit_user_path(@user)
     assert_template 'users/edit'
 
-    num_errors = 5
+    num_errors = 2
     patch user_path(@user), params: { user: { first_name: "",
                                               last_name: "" } }
-    assert_template 'users/edit' # Failed edit redirects back to edit page
+    # assert_template
     assert_select "div.alert", text: /^The form contains #{num_errors} errors/
   end
 

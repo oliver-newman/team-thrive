@@ -1,9 +1,8 @@
 require 'httparty'
 
 class UsersController < ApplicationController
-  before_action :confirm_user_logged_in, only: [:edit, :update, 
-                                                :destroy, :following,
-                                                :followers]
+  before_action :confirm_user_logged_in, only: [:edit, :update, :destroy,
+                                                :index, :following, :followers]
   before_action :confirm_correct_user, only: [:edit, :update]
   before_action :confirm_admin_user, only: [:destroy]
 
@@ -24,17 +23,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
-    p user_params.class
     if @user.update_attributes(user_params)
       flash[:success] = "Successfully updated profile."
       redirect_to @user
