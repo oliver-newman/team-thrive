@@ -1,9 +1,9 @@
-# Gemfile from railstutorial.org
 ruby '2.3.1'
 
 source 'https://rubygems.org'
 
 gem 'rails',                    '5.0.0.1'
+gem 'httparty',                 '0.14.0' 
 gem 'bcrypt',                   '3.1.11'
 gem 'faker',                    '1.6.6'
 gem 'will_paginate',            '3.1.0'
@@ -18,11 +18,15 @@ gem 'turbolinks',               '5.0.1'
 gem 'jbuilder',                 '2.4.1'
 gem 'strava-api-v3',            '0.6.0'
 gem 'ruby-units',               '2.1.0'
+gem 'chartkick',                '2.2.2'
+gem 'paperclip',                '5.1.0'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.11'
-  gem 'byebug',  '9.0.0', platform: :mri
+  gem 'sqlite3',      '1.3.11'
+  gem 'byebug',       '9.0.0', platform: :mri
   gem 'dotenv-rails', '2.1.1'
+  gem 'webmock',      '2.3.2'
+  gem 'vcr',          '3.0.3'
 end
 
 group :development do
@@ -40,7 +44,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '0.18.4'
+  gem 'pg',             '0.18.4'
   gem 'rack-wwwhisper', '~> 1.0'
 end
 

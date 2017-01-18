@@ -9,15 +9,19 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     @activity3 = activities(:run1)
   end
 
-  test "should redirect new when no user is logged in" do
-    get new_activity_path
+  test "should upload when no user is logged in" do
+    get upload_path
     assert_redirected_to login_url
   end
 
   test "should redirect create when no user is logged in" do
     assert_no_difference 'Activity.count' do
       post activities_path, params: { activity: { title: "Morning ride", 
+                                                  strava_id: 891075190472139,
                                                   sport: :ride,
+                                                  distance: 53454,
+                                                  moving_time: 239874,
+                                                  elevation_gain: 3424,
                                                   start_date: Time.zone.now } }
     end
     assert_redirected_to login_url

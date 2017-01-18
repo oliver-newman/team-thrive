@@ -1,3 +1,5 @@
+require 'httparty'
+
 module SessionsHelper
   # Starts a session (when a user logs in).
   def log_in(user)
@@ -59,5 +61,18 @@ module SessionsHelper
   # Stores the URL the user is trying to access. 
   def store_url
     session[:forwarding_url] = request.original_url if request.get?
+  end
+
+  # Connects to Strava API, exchanging code for access token and athlete data.
+  def strava_access_info(code)
+    HTTParty.post(
+      'https://www.strava.com/oauth/token',
+      body: {
+        'client_id': Rails.application.secrets.STRAVA_CLIENT_ID,
+        'client_secret': Rails.application.secrets.STRAVA_CLIENT_SECRET,
+        'code': code
+      }.to_json,
+      headers: { 'Content-Type' => 'application/json' }
+    ).parsed_response
   end
 end

@@ -25,6 +25,16 @@ textarea {
   max-width: 1000px;
 }
 
+.row-centered {
+  text-align: center;
+}
+
+.col-centered {
+  text-align: center;
+  display: inline-block;
+  // float: none;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -33,7 +43,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 3em;
-  letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -52,7 +61,7 @@ p {
 }
 
 .logo {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Arial', sans-serif;
   letter-spacing: -1px;
 
   .logo-light {
@@ -68,6 +77,7 @@ ul.pagination {
   li:not(.active) a {
     color: $theme-blue;
   }
+
   li.active a {
     color: white;
     background-color: $theme-blue;
@@ -78,6 +88,10 @@ ul.pagination {
       border-color: $theme-dark-blue;
     }
   }
+}
+
+.stat-label {
+  font-weight: bold;
 }
 
 /* header */
@@ -105,13 +119,16 @@ ul.pagination {
     font-size: 1.7em;
     padding-top: 9px;
     text-decoration: none;
-    /* Don't allow users to select the logo text */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+  }
+  
+  .gravatar {
+    margin-top: -5px;
   }
 }
 
@@ -142,6 +159,7 @@ footer {
       color: $gray-light;
     }
   }
+
   ul {
     float: right;
     list-style: none;
@@ -215,6 +233,7 @@ input {
 .checkbox {
   margin-top: 10px;
   margin-bottom: 10px;
+
   span {
     margin-left: 20px;
     font-weight: normal;

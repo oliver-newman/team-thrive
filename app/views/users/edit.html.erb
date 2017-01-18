@@ -11,6 +11,9 @@
     <%= form_for(@user, html: { class: "edit-form" } ) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
+      <%= f.label :fundraising_goal %>
+      <%= f.number_field :fundraising_goal, class: 'form-control' %>
+
       <%= f.label :first_name %>
       <%= f.text_field :first_name, class: 'form-control' %>
 
@@ -31,12 +34,6 @@
 
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
 
       <%= f.submit "Save Changes", class: "btn btn-theme" %>
     <% end %>

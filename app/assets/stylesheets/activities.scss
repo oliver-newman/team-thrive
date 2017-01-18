@@ -8,26 +8,27 @@
     padding: 10px 0;
     border-top: 1px solid $gray-medium-light;
 
-    .title a {
-      color: black;
-      font-weight: bold;
+    .title {
       display: block;
       margin-left: 60px;
+      font-weight: bold;
+
+      a {
+        color: black;
+      }
     }
 
-    .user a {
-      color: black;
-      display: block;
+    .user {
       margin-left: 60px;
       padding-top: 0;
+      display: block;
+
+      a {
+        color: black;
+      }
     }
 
     .date {
-      display: block;
-      margin-left: 60px;
-    }
-
-    .data {
       display: block;
       margin-left: 60px;
     }
@@ -42,6 +43,35 @@
       margin-right: 10px;
       margin-top: 5px;
     }
+
+    .map {
+    }
   }
 }
 
+.strava-activities {
+  li {
+    .btn {
+      width: 100%;
+      float: right;
+    }
+  }
+}
+
+.progress.active {
+  .progress-bar {
+    -webkit-transition: none !important;
+    transition: none !important;
+  }
+}
+
+.icon-container {
+  .icon {
+    height: 50px;
+    margin-right: 5px;
+  }
+
+  .icon-label {
+    font-size: 1.5em;
+  }
+}

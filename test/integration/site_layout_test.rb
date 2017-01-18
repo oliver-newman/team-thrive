@@ -6,14 +6,11 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   end
 
   test "non logged in layout links" do
-    get login_path
-    assert_select "a[href=?]", signup_path
     get root_path
-    assert_template 'static_pages/home'
+    assert_template 'static_pages/welcome'
     assert_select "a[href=?]", root_path
-    assert_select "a[href=?]", help_path
     assert_select "a[href=?]", about_path
-    assert_select "a[href=?]", login_path
+    assert_select "form[action=?]", login_url
     assert_select "a[href=?]", new_activity_path, count: 0
     assert_select "a[href=?]", users_path, count: 0
     assert_select "a[href=?]", edit_user_path(@user), count: 0
@@ -21,13 +18,12 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   end
 
   test "logged in layout links" do
-    get login_path
-    @user = users(:oliver)
-    log_in_as @user
-    get root_path
-    assert_template 'static_pages/home'
-    assert_select "a[href=?]", root_path, count: 2
-    assert_select "a[href=?]", help_path
+    log_in_as(@user)
+    assert is_logged_in?
+    get dashboard_path
+    assert_template 'activities/dashboard'
+    assert_select "a[href=?]", root_path
+    assert_select "a[href=?]", dashboard_path
     assert_select "a[href=?]", about_path
     assert_select "a[href=?]", users_path
     assert_select "a[href=?]", new_activity_path

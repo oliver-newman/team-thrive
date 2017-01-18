@@ -1,7 +1,8 @@
 ride1:
+  strava_activity_id: 1
   sport: ride
   start_date: <%= 1.day.ago %>
-  distance: 1.5
+  distance: 15000
   elevation_gain: 1.5
   moving_time: 1
   title: Ride1
@@ -9,9 +10,10 @@ ride1:
   user: oliver
 
 ride2:
+  strava_activity_id: 2
   sport: ride
   start_date: <%= 2.hours.ago %>
-  distance: 2.5
+  distance: 3000
   elevation_gain: 2.5
   moving_time: 100
   title: Ride2
@@ -19,9 +21,10 @@ ride2:
   user: oliver
 
 run1:
+  strava_activity_id: 3
   sport: run
   start_date: <%= 3.years.ago %>
-  distance: 1.7
+  distance: 10000
   elevation_gain: 2.0
   moving_time: 600
   title: Run1
@@ -29,9 +32,10 @@ run1:
   user: oliver
 
 run2:
+  strava_activity_id: 4
   sport: run
   start_date: <%= 6.months.ago %>
-  distance: 5
+  distance: 5000
   elevation_gain: 2.0
   moving_time: 700
   title: Run2
@@ -39,9 +43,10 @@ run2:
   user: bob
 
 most_recent:
+  strava_activity_id: 5718203
   sport: run
   start_date: <%= Time.zone.now %>
-  distance: 100
+  distance: 2000
   elevation_gain: 1.5
   moving_time: 100
   title: Run today
@@ -50,10 +55,11 @@ most_recent:
 
 <% 100.times do |n| %>
 activity_<%= n %>:
+  strava_activity_id: <%= n + 5 %>
   sport: <%= ["run", "ride"].sample %>
   title: <%= Faker::Lorem.sentence[0..-2] %>
   start_date: <%= Faker::Date.between(5.years.ago, Time.zone.now) %>
-  distance: <%= rand(1..20) %>
+  distance: <%= rand(3000..20000) %>
   elevation_gain: <%= rand(0..500) %>
   moving_time: <%= rand(600..3000) %>
   comments: <%= Faker::Lorem.sentence(10) %>

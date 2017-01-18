@@ -1,0 +1,16 @@
+<div class="center jumbotron">
+  <h1><%= render 'layouts/logo' %></h1>
+  <h2>
+    Going the distance to defeat child hunger.
+  </h2>
+
+  <%=  form_for(:session, url: login_url) do |f| %>
+    <%= image_submit_tag "connect_with_strava/btn_strava_connectwith_light" +
+                         "/btn_strava_connectwith_light@2x.png",
+                         class: "strava-submit" %>
+    <%= f.label :remember_me, class: "checkbox inline" do %>
+      <%= f.check_box :remember_me %>
+      <span>Keep me logged in</span>
+    <% end %>
+  <% end %>
+</div>

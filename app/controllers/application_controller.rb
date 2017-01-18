@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     unless logged_in?
       store_url # So that user is sent to the same URL after they log in
       flash[:danger] = "Please log in."
-      redirect_to login_url
+      redirect_to root_url
     end
   end
 end

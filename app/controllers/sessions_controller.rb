@@ -1,24 +1,34 @@
 class SessionsController < ApplicationController
   def new
+    remember_me = params[:session][:remember_me] ? "1" : "0"
+    redirect_to "https://www.strava.com/oauth/authorize?" +
+    		"client_id=#{Rails.application.secrets.STRAVA_CLIENT_ID}" +
+    		"&redirect_uri=#{strava_auth_url}" +
+    		"&state=#{remember_me}" +
+    		"&response_type=code"
   end
 
   def create
-    @user = User.find_by(email: params[:session][:email].downcase)
-    if @user && @user.authenticate(params[:session][:password])
-      if @user.activated?
-        log_in @user    # Temporary session cookie
-        params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-        redirect_back_or_to @user
-      else
-        flash[:warning] = "Your account has not yet been activated. Check " +
-                          "your email for the activation link."
-        redirect_to root_url
-      end
-    else
-      # Login failed
-      flash.now[:danger] = 'Invalid email/password combination'
-      render 'new'
+    if params["error"]
+      flash[:warning] = "Strava authentication failed. Make sure you have an " +
+                        "activated Strava account and that you are logged in " +
+                        "to Strava on this device."
+      redirect_to root_url
     end
+
+    strava_response = strava_access_info(params["code"])
+    strava_athlete = strava_response["athlete"]
+    @user = User.find_or_create_by(strava_id: strava_athlete["id"]) do |user|
+      user.strava_token    = strava_response["access_token"]
+      user.first_name      = strava_athlete["firstname"]
+      user.last_name       = strava_athlete["lastname"]
+      user.email           = strava_athlete["email"]
+      user.unit_preference = strava_athlete["measurement_preference"]
+    end
+
+    log_in @user
+    params["state"] == "1" ? remember(@user) : forget(@user)
+    redirect_back_or_to @user
   end
 
   def destroy

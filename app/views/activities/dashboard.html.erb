@@ -1,0 +1,90 @@
+<% provide(:title, "Dashboard") %>
+
+<%= link_to "Sync with Strava", new_activity_path,
+            class: "btn btn-theme btn-block" %>
+
+<div class="row">
+  <div class="col-md-8">
+    <h3>My Past 7 Days</h3>
+
+    <div class="row row-centered">
+      <% Activity.sports.each do |sport, _| %>
+        <% if distance_travelled_by(@user, sport, 7.days.ago).positive? %>
+          <div class="col-xs-6 col-centered">
+            <div class="icon-container">
+              <%= icon_for(sport) %>
+              <span class="icon-label">
+                <%= distance_formatted_for(
+                      distance_travelled_by(@user, sport, 7.days.ago),
+                      current_user
+                    ) %>
+              </span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <div class="icon-container">
+        <div class="col-xs-6 col-centered">
+          <%= icon_for("meal") %>
+          <span class="icon-label">
+            <%= meals_funded_by(@user, 7.days.ago).round(1) %> meals funded
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <h3>My Impact</h3>
+
+    <div class="progress active">
+      <div class="progress-bar" role="progressbar"
+           aria-valuenow="<%= percent_of_goal_raised_by(@user) %>"
+           aria-valuemin="0" aria-valuemax="100"
+           style="width:<%= percent_of_goal_raised_by(@user) %>%">
+      </div>
+    </div>
+    <center>
+      <%= number_to_percentage(percent_of_goal_raised_by(@user), precision: 0) %>
+      of goal complete
+    </center>
+  </div>
+
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">TeamThrive Totals</h1>
+      </div>
+
+      <div class="panel-body">
+        <p><%= pluralize(User.count, 'user') %></p>
+        <p><%= Activity.count %> activities uploaded</p>
+        <% Activity.sports.each do |sport, _| %>
+          <p>
+            <span class="stat-label">Distance <%= past_tensify(sport) %>:</span>
+            <%= distance_formatted_for(sport_distance_overall(sport),
+                                       current_user) %>
+          </p>
+        <% end %>
+        <p>
+          <span class="stat-label">Total fundraising:</span>
+          <%= number_to_currency(dollars_raised_overall) %>
+        </p>
+        <p>
+          <span class="stat-label">Total meals funded:</span>
+          <%= meals_funded_overall.round(1) %>
+          <%= pie_chart(
+                {
+                  raised: dollars_raised_overall,
+                  to_go: Fundraising::OVERALL_GOAL_DOLLARS -
+                         dollars_raised_overall
+                },
+                donut: true,
+                colors: ["#2CC14F", "#EAEAEA"],
+                tooltips: { enabled: false }, # Not working
+                legend: false
+              ) 
+          %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

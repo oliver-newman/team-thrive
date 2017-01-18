@@ -1,3 +1,21 @@
-// Place all the styles related to the StaticPages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.strava-submit {
+  padding: 0;
+  margin: 0;
+  border: none;
+  max-width: 386px;
+  height: auto;
+  background-image: image-url("");
+  background-repeat: no-repeat;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.panel {
+  margin-top: 20px;
+}
+
+.progress-bar {
+  background-color: $theme-blue;
+}

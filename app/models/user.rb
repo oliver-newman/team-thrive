@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor :remember_token
 
   enum unit_preference: { feet: 0, meters: 1 }, _prefix: :prefers
 
@@ -15,19 +15,18 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
+  validates :strava_token, presence: true
+  validates :strava_id, presence: true
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :email, presence: true,
                     length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validates :unit_preference, presence: true
+  validates :fundraising_goal, presence: true, numericality: { greater_than: 0 }
 
   before_save :downcase_email
-  before_create :create_activation_digest
-
-  has_secure_password # BCrypt
 
   def full_name
     "#{first_name} #{last_name}"
@@ -51,32 +50,6 @@ class User < ApplicationRecord
   # Forgets user by deleting the server-side reference to a persistent session.
   def forget
     update_attributes(remember_digest: nil)
-  end
-
-  # Sends account activation email.
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
-  end
-
-  # Activates user's account.
-  def activate
-    update_attributes(activated: true, activated_at: Time.zone.now)
-  end
-
-  # Sets the password reset attributes.
-  def create_reset_digest
-    self.reset_token = User.new_token
-    update_attributes(reset_digest: User.digest(reset_token),
-                      reset_sent_at: Time.zone.now)
-  end
-
-  # Sends password reset email.
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
-  end
-
-  def password_reset_expired?
-    reset_sent_at < 2.hours.ago
   end
 
   # Returns a list of activities in the user's feed.
@@ -117,6 +90,11 @@ class User < ApplicationRecord
     end
   end
 
+  # Returns a Strava API client using the user's Strava access token.
+  def strava_client
+    @strava_client ||= Strava::Api::V3::Client.new(access_token: strava_token)
+  end
+
   class << self
     # Returns hash digest of the given string.
     def digest(string)
@@ -136,11 +114,5 @@ class User < ApplicationRecord
   # Converts email to all lower-case.
   def downcase_email
    email.downcase!
-  end
-
-  # Creates and assigns activation token and digest for user.
-  def create_activation_digest
-    self.activation_token = User.new_token
-    self.activation_digest = User.digest(activation_token)
   end
 end

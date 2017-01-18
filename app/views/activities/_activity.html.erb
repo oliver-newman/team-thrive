@@ -1,15 +1,20 @@
 <li id="activity-<%= activity.id %>">
+  <% if activity.small_map.present? %>
+    <span class="map">
+      <%= link_to image_tag(activity.small_map.url), activity %>
+    </span>
+  <% end %>
   <%= link_to gravatar_for(activity.user, size: 50), activity.user %>
-  <span class="user">
-    <%= link_to activity.user.full_name, activity.user %>
-  </span>
   <span class="title">
     <%= link_to activity.title, activity %>
+  </span>
+  <span class="user">
+    <%= link_to activity.user.full_name, activity.user %>
   </span>
   <span class="date">
     <%= activity.start_date.strftime("%B %d, %Y") %>
   </span>
-  <span class="data">
-    <%= activity.distance_formatted_for(current_user) %>
+  <span class="distance">
+    <%= distance_formatted_for(activity.distance, current_user) %>
   </span>
 </li>

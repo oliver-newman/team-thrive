@@ -1,47 +1,38 @@
 oliver:
   first_name: Oliver
   last_name: Newman
-  email: oliver@example.com
+  email: oliver@whmsi.com
+  unit_preference: feet
+  fundraising_goal: 150
   strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
+  strava_token: <%= Faker::Crypto.sha1 %>
   admin: true
-  activated: true
-  activated_at: <%= Time.zone.now %>
 
 bob:
   first_name: Bob
   last_name: Williams
   email: bob@example.com
-  strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
-  activated: true
-  activated_at: <%= Time.zone.now %>
+  unit_preference: meters
+  fundraising_goal: 100000
+  strava_id: 1000000
+  strava_token: <%= Faker::Crypto.sha1 %>
 
 lee:
   first_name: Chen
   last_name: Lee
   email: lee@example.com
-  strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
-  activated: true
-  activated_at: <%= Time.zone.now %>
-
-not_activated:
-  first_name: Linda
-  last_name: Simba
-  email: linda@example.com
-  strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
-  activated: false
-  activated_at: nil
+  unit_preference: meters
+  fundraising_goal: 2000
+  strava_id: 1000001
+  strava_token: <%= Faker::Crypto.sha1 %>
 
 <% 30.times do |i| %>
 user<%= i %>:
   first_name: <%= "Test#{i}" %>
   last_name: <%= "User#{i}" %>
   email: <%= "test#{i}@example.com" %>
-  strava_id: 5882007
-  password_digest: <%= User.digest('password') %>
-  activated: true
-  activated_at: <%= Time.zone.now %>
+  unit_preference: feet
+  fundraising_goal: 1000
+  strava_id: <%= i %>
+  strava_token: <%= Faker::Crypto.sha1 %>
 <% end %>
