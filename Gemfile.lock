@@ -227,6 +227,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
+    vcr (3.0.3)
     web-console (3.1.1)
       activemodel (>= 4.2)
       debug_inspector
@@ -274,6 +275,7 @@ DEPENDENCIES
   turbolinks (= 5.0.1)
   tzinfo-data
   uglifier (= 3.0.0)
+  vcr (= 3.0.3)
   web-console (= 3.1.1)
   webmock (= 2.3.2)
   will_paginate (= 3.1.0)

@@ -22,9 +22,11 @@ gem 'chartkick',                '2.2.2'
 gem 'paperclip',                '5.1.0'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.11'
-  gem 'byebug',  '9.0.0', platform: :mri
+  gem 'sqlite3',      '1.3.11'
+  gem 'byebug',       '9.0.0', platform: :mri
   gem 'dotenv-rails', '2.1.1'
+  gem 'webmock',      '2.3.2'
+  gem 'vcr',          '3.0.3'
 end
 
 group :development do
@@ -39,11 +41,10 @@ group :test do
   gem 'minitest-reporters',       '1.1.9'
   gem 'guard',                    '2.13.0'
   gem 'guard-minitest',           '2.4.4'
-  gem 'webmock',                  '2.3.2'
 end
 
 group :production do
-  gem 'pg', '0.18.4'
+  gem 'pg',             '0.18.4'
   gem 'rack-wwwhisper', '~> 1.0'
 end
 
